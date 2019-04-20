@@ -5,6 +5,9 @@
  */
 package model.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import model.bean.Usuario;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,7 +17,7 @@ import static org.junit.Assert.*;
  * @author Lenon
  */
 public class usuarioDAOTest {
-    
+
     public usuarioDAOTest() {
     }
 
@@ -29,5 +32,15 @@ public class usuarioDAOTest {
             System.out.println("Erro ao salvar");
         }
     }
-    
+    @Test
+    public void obter() {
+        usuarioDAO dao = new usuarioDAO();
+        for (Usuario user: dao.getAll() ) {
+            System.out.println(user.getId());
+            System.out.println(user.getLogin());
+            System.out.println(user.getNome());
+            System.out.println(user.getSenha());
+        }   
+    }
+
 }

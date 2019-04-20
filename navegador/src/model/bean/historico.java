@@ -15,13 +15,13 @@ public class historico {
     private String pagina;
     private String url;
     private String data_acesso;
-    private int id_usuario;
+    private Usuario id_usuario;
     private boolean favorito;
 
     public historico() {
     }
 
-    public historico(String pagina, String url, String data_acesso, int id_usuario, boolean favorito) {
+    public historico(String pagina, String url, String data_acesso, Usuario id_usuario, boolean favorito) {
         this.pagina = pagina;
         this.url = url;
         this.data_acesso = data_acesso;
@@ -62,11 +62,11 @@ public class historico {
         this.data_acesso = data_acesso;
     }
 
-    public int getId_usuario() {
+    public Usuario getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(int id_usuario) {
+    public void setId_usuario(Usuario id_usuario) {
         this.id_usuario = id_usuario;
     }
 
