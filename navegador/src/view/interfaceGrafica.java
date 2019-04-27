@@ -16,6 +16,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
      */
     public interfaceGrafica() {
         initComponents();
+        setTitle("Navegador");
     }
 
     /**
@@ -27,21 +28,152 @@ public class interfaceGrafica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu = new javax.swing.JPopupMenu();
+        jMIHistorico = new javax.swing.JMenuItem();
+        jMIFavoritos = new javax.swing.JMenuItem();
+        jSeparador = new javax.swing.JPopupMenu.Separator();
+        jMIModoPrivado = new javax.swing.JMenuItem();
+        jTPAbas = new javax.swing.JTabbedPane();
+        jPAba1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPNavegacao = new javax.swing.JPanel();
+        jBVoltar = new javax.swing.JButton();
+        jBAvancar = new javax.swing.JButton();
+        jPUrl = new javax.swing.JPanel();
+        jTFUrl = new javax.swing.JTextField();
+        jBBuscarUrl = new javax.swing.JButton();
+        jBUser = new javax.swing.JButton();
+        jBMenu = new javax.swing.JButton();
+
+        jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
+        jMIHistorico.setText("Histórico");
+        jPopupMenu.add(jMIHistorico);
+
+        jMIFavoritos.setText("Favoritos");
+        jPopupMenu.add(jMIFavoritos);
+        jPopupMenu.add(jSeparador);
+
+        jMIModoPrivado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        jMIModoPrivado.setText("Modo privativo");
+        jPopupMenu.add(jMIModoPrivado);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout jPAba1Layout = new javax.swing.GroupLayout(jPAba1);
+        jPAba1.setLayout(jPAba1Layout);
+        jPAba1Layout.setHorizontalGroup(
+            jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 608, Short.MAX_VALUE)
+        );
+        jPAba1Layout.setVerticalGroup(
+            jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jTPAbas.addTab("Aba", jPAba1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 608, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        jTPAbas.addTab("+", jPanel2);
+
+        jBVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/voltar.png"))); // NOI18N
+
+        jBAvancar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/avancar.png"))); // NOI18N
+
+        jPUrl.setBackground(new java.awt.Color(255, 255, 255));
+
+        jBBuscarUrl.setBackground(new java.awt.Color(255, 255, 255));
+        jBBuscarUrl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/busca_url.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPUrlLayout = new javax.swing.GroupLayout(jPUrl);
+        jPUrl.setLayout(jPUrlLayout);
+        jPUrlLayout.setHorizontalGroup(
+            jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPUrlLayout.createSequentialGroup()
+                .addComponent(jTFUrl)
+                .addGap(0, 0, 0)
+                .addComponent(jBBuscarUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPUrlLayout.setVerticalGroup(
+            jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPUrlLayout.createSequentialGroup()
+                .addGroup(jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jBBuscarUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFUrl))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jBUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/user.png"))); // NOI18N
+
+        jBMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/menu.png"))); // NOI18N
+        jBMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBMenuActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPNavegacaoLayout = new javax.swing.GroupLayout(jPNavegacao);
+        jPNavegacao.setLayout(jPNavegacaoLayout);
+        jPNavegacaoLayout.setHorizontalGroup(
+            jPNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPNavegacaoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jBVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jBAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPUrl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
+        );
+        jPNavegacaoLayout.setVerticalGroup(
+            jPNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPNavegacaoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPNavegacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBAvancar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jTPAbas)
+            .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 429, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
+        //conferir com o professor se pode ser dessa forma
+        jPopupMenu.show(jBMenu, WIDTH - 160, jBMenu.getY() + 27);
+    }//GEN-LAST:event_jBMenuActionPerformed
 
     /**
      * @param args the command line arguments
@@ -50,7 +182,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -79,5 +211,21 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBAvancar;
+    private javax.swing.JButton jBBuscarUrl;
+    private javax.swing.JButton jBMenu;
+    private javax.swing.JButton jBUser;
+    private javax.swing.JButton jBVoltar;
+    private javax.swing.JMenuItem jMIFavoritos;
+    private javax.swing.JMenuItem jMIHistorico;
+    private javax.swing.JMenuItem jMIModoPrivado;
+    private javax.swing.JPanel jPAba1;
+    private javax.swing.JPanel jPNavegacao;
+    private javax.swing.JPanel jPUrl;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenu;
+    private javax.swing.JPopupMenu.Separator jSeparador;
+    private javax.swing.JTextField jTFUrl;
+    private javax.swing.JTabbedPane jTPAbas;
     // End of variables declaration//GEN-END:variables
 }
