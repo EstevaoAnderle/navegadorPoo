@@ -5,11 +5,21 @@
  */
 package view;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import service.navegadorService;
+
 /**
  *
  * @author Lenon
  */
 public class interfaceGrafica extends javax.swing.JFrame {
+
+    navegadorService nav = new navegadorService();
 
     /**
      * Creates new form interfaceGrafica
@@ -44,6 +54,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
+        pagina = new javax.swing.JTextField();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -93,6 +104,11 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         jBBuscarUrl.setBackground(new java.awt.Color(255, 255, 255));
         jBBuscarUrl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/busca_url.png"))); // NOI18N
+        jBBuscarUrl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarUrlActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPUrlLayout = new javax.swing.GroupLayout(jPUrl);
         jPUrl.setLayout(jPUrlLayout);
@@ -157,6 +173,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTPAbas)
             .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pagina)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +184,9 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 429, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -174,6 +196,27 @@ public class interfaceGrafica extends javax.swing.JFrame {
         //conferir com o professor se pode ser dessa forma
         jPopupMenu.show(jBMenu, WIDTH - 160, jBMenu.getY() + 27);
     }//GEN-LAST:event_jBMenuActionPerformed
+
+    private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
+
+        try {
+            URL url = new URL(jTFUrl.getText());
+            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
+            nav.urlDown(url, file);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            while (br.ready()) {
+                String linha = br.readLine();
+                pagina.setText(pagina.getText() + "\n" + linha);
+            }
+            br.close();
+        
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
     /**
      * @param args the command line arguments
@@ -227,5 +270,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparador;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
+    private javax.swing.JTextField pagina;
     // End of variables declaration//GEN-END:variables
 }
