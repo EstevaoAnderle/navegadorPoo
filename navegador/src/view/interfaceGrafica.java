@@ -11,6 +11,9 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
+import service.ParseHtml;
 import service.navegadorService;
 
 /**
@@ -101,6 +104,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBAvancar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/avancar.png"))); // NOI18N
 
         jPUrl.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTFUrl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFUrlActionPerformed(evt);
+            }
+        });
 
         jBBuscarUrl.setBackground(new java.awt.Color(255, 255, 255));
         jBBuscarUrl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/busca_url.png"))); // NOI18N
@@ -200,16 +209,24 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
 
         try {
-            URL url = new URL(jTFUrl.getText());
-            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
-            nav.urlDown(url, file);
-            BufferedReader br = new BufferedReader(new FileReader(file));
+            //testes com arquivo local, html mais simples
+//            URL url = new URL(jTFUrl.getText());
+//            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
+//            nav.urlDown(url, file);
+            JFileChooser chooser = new JFileChooser();
+            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+                
+            }
+            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
+            String linha = "";
             while (br.ready()) {
-                String linha = br.readLine();
-                pagina.setText(pagina.getText() + "\n" + linha);
+                linha += br.readLine();
             }
             br.close();
-        
+
+            ParseHtml p = new ParseHtml();
+            p.parseArvore(linha);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -217,6 +234,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
+
+    private void jTFUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFUrlActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFUrlActionPerformed
 
     /**
      * @param args the command line arguments
