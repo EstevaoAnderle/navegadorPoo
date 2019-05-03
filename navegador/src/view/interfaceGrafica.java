@@ -225,7 +225,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
             br.close();
 
             ParseHtml p = new ParseHtml();
-            p.parseArvore(linha);
+           String arvore = p.parseArvore(linha);
+           pagina.setText(arvore);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
