@@ -18,4 +18,24 @@ public class Nos {
     ArrayList<Atributos> atributos = new ArrayList<Atributos>();
     String nameTag;
     String conteudoTag;
+
+    public Nos(String nameTag) {
+        this.nameTag = nameTag;
+    }
+
+    public void setNameTag(String nameTag) {
+        this.nameTag = nameTag;
+    }
+
+    public void setConteudoTag(String conteudoTag) {
+        this.conteudoTag = conteudoTag;
+    }
+
+    public String getNameTag() {
+        return nameTag;
+    }
+
+    public ArrayList<Atributos> getAtributos() {
+        return atributos;
+    }
 }
