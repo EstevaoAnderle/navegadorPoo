@@ -16,32 +16,32 @@ public class ParseHtml {
 
     public String parseArvore(String parse) {
 
-        Pattern p = Pattern.compile("<(.*)>.*<(\\/\\1)>");
+        Pattern p = Pattern.compile("<(.[^>]*)>(.*)");
         Matcher m = p.matcher(parse);
+        Nos raiz = new Nos(" ");
         while (m.find()) {
-            Nos n = new Nos("<" + m.group(1) + ">" + "<" + m.group(2) + ">");
-            n.noChildren.add(n);
-
+            Nos n = new Nos(m.group(1));
+            raiz.noChildren.add(n);
             if (!m.group(0).isEmpty()) {
-                String filho = m.group(0).replaceAll("<" + m.group(1) + ">", "");
-                filho = filho.replaceAll("</" + m.group(1) + ">", "");
-                Nos filho1 = new Nos("<" + m.group(1) + ">" + "<" + m.group(2) + ">");
+                Nos filho1 = new Nos(m.group(1));
                 n.noChildren.add(filho1);
-                Matcher mFilho = p.matcher(filho);
+                Matcher mFilho = p.matcher(m.group(0));
                 while (mFilho.find()) {
-                    Nos neto1 = new Nos("<" + mFilho.group(1) + ">" + "<" + mFilho.group(2) + ">");
+                    Nos neto1 = new Nos(mFilho.group(1));
                     filho1.noChildren.add(neto1);
-                    if (!mFilho.group(0).isEmpty()) {
-                        String neto = mFilho.group(0).replaceAll("<" + mFilho.group(1) + ">", "");
-                        neto = neto.replaceAll("</" + mFilho.group(1) + ">", "");
-                    }
                 }
             }
-            int i;
-            for (i = 0; i < n.noChildren.size(); i++) {
-                System.out.println(n.noChildren.get(i).getNameTag());
+        }
+        int i;
+        for (i = 0; i < raiz.noChildren.size(); i++) {
+            System.out.println(raiz.noChildren.get(i).getNameTag());
+            //ler a arvore, encontrar um jeito
+            while (raiz.noChildren.contains(i)) {
+                System.out.println(raiz.getNameTag());
             }
         }
         return parse;
     }
+}
+
 }
