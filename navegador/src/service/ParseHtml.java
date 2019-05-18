@@ -14,34 +14,22 @@ import java.util.regex.Pattern;
  */
 public class ParseHtml {
 
+    Nos raiz = new Nos(" ");
+
     public String parseArvore(String parse) {
 
-        Pattern p = Pattern.compile("<(.[^>]*)>(.*)");
+        Pattern p = Pattern.compile("<(.*)(\\s?\\w*\\s.*?)?>(.*)<(\\/\\1)>");
         Matcher m = p.matcher(parse);
-        Nos raiz = new Nos(" ");
         while (m.find()) {
-            Nos n = new Nos(m.group(1));
-            raiz.noChildren.add(n);
-            if (!m.group(0).isEmpty()) {
-                Nos filho1 = new Nos(m.group(1));
-                n.noChildren.add(filho1);
-                Matcher mFilho = p.matcher(m.group(0));
-                while (mFilho.find()) {
-                    Nos neto1 = new Nos(mFilho.group(1));
-                    filho1.noChildren.add(neto1);
-                }
+            System.out.println(m.group(1));
+            if (m.group(3).isEmpty()) {
+                System.out.println(m.group(3));
+                return m.group(3);
             }
+            raiz.noChildren.add(new Nos(m.group(1)));
+            System.out.println(m.group(3));
+            return parseArvore(m.group(3));
         }
-        int i;
-        for (i = 0; i < raiz.noChildren.size(); i++) {
-            System.out.println(raiz.noChildren.get(i).getNameTag());
-            //ler a arvore, encontrar um jeito
-            while (raiz.noChildren.contains(i)) {
-                System.out.println(raiz.getNameTag());
-            }
-        }
-        return parse;
+        return "teste";
     }
-}
-
 }
