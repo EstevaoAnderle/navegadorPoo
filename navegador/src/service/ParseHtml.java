@@ -14,34 +14,34 @@ import java.util.regex.Pattern;
  */
 public class ParseHtml {
 
-    public String parseArvore(String parse) {
-
-        Pattern p = Pattern.compile("<(.[^>]*)>(.*)");
+    public Nos parseArvore(String parse, Nos raiz) {
+        if (raiz == null) {
+            raiz = new Nos("", "", "");
+        }
+        Pattern p = Pattern.compile("<(.*)(\\s?\\w*\\s.*?)?>(.*)<(\\/\\1)>");
         Matcher m = p.matcher(parse);
-        Nos raiz = new Nos(" ");
         while (m.find()) {
-            Nos n = new Nos(m.group(1));
-            raiz.noChildren.add(n);
-            if (!m.group(0).isEmpty()) {
-                Nos filho1 = new Nos(m.group(1));
-                n.noChildren.add(filho1);
-                Matcher mFilho = p.matcher(m.group(0));
-                while (mFilho.find()) {
-                    Nos neto1 = new Nos(mFilho.group(1));
-                    filho1.noChildren.add(neto1);
-                }
+            Nos n = new Nos(m.group(1), m.group(2) == "" ? " " : m.group(2), " ");
+            if (detectaTexto(m.group(3))) {
+                n.texto = m.group(3);
             }
-        }
-        int i;
-        for (i = 0; i < raiz.noChildren.size(); i++) {
-            System.out.println(raiz.noChildren.get(i).getNameTag());
-            //ler a arvore, encontrar um jeito
-            while (raiz.noChildren.contains(i)) {
-                System.out.println(raiz.getNameTag());
-            }
-        }
-        return parse;
-    }
-}
 
+            raiz.noChildren.add(n);
+            System.out.println(n.getNameTag());
+            System.out.println(n.getAtributosTag());
+            System.out.println(n.getTexto());
+            parseArvore(m.group(3), n);
+        }
+        return raiz;
+    }
+
+    public boolean detectaTexto(String parse) {
+        Pattern p = Pattern.compile("^\\b\\w.*[^<>]$");
+        Matcher m = p.matcher(parse);
+        if (m.matches()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
