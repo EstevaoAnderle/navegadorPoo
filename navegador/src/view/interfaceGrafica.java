@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
+import service.Nos;
 import service.ParseHtml;
 import service.navegadorService;
 
@@ -225,8 +226,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
             br.close();
 
             ParseHtml p = new ParseHtml();
-           String arvore = p.parseArvore(linha);
-           pagina.setText(arvore);
+           Nos arvore = p.parseArvore(linha, null);
+//           pagina.setText(arvore);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();

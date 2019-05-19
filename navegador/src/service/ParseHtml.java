@@ -14,22 +14,35 @@ import java.util.regex.Pattern;
  */
 public class ParseHtml {
 
-    Nos raiz = new Nos(" ");
-
-    public String parseArvore(String parse) {
-
+    public Nos parseArvore(String parse, Nos raiz) {
+        if (raiz == null) {
+            raiz = new Nos("", "", "");
+        }
         Pattern p = Pattern.compile("<(.*)(\\s?\\w*\\s.*?)?>(.*)<(\\/\\1)>");
         Matcher m = p.matcher(parse);
         while (m.find()) {
-            System.out.println(m.group(1));
-            if (m.group(3).isEmpty()) {
-                System.out.println(m.group(3));
-                return m.group(3);
+            Nos n = new Nos(m.group(1), m.group(2) == "" ? " " : m.group(2), " ");
+            if (detectaTexto(m.group(3))) {
+                n.texto = m.group(3);
             }
-            raiz.noChildren.add(new Nos(m.group(1)));
-            System.out.println(m.group(3));
-            return parseArvore(m.group(3));
+
+            raiz.noChildren.add(n);
+            System.out.println(n.getNameTag());
+            System.out.println(n.getAtributosTag());
+            System.out.println(n.getTexto());
+            parseArvore(m.group(3), n);
         }
-        return "teste";
+        return raiz;
+    }
+
+    public boolean detectaTexto(String parse) {
+        Pattern p = Pattern.compile("^\\b\\w.*[^<>]$");
+        Matcher m = p.matcher(parse);
+        System.out.println(m.matches());
+        if (m.matches()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
