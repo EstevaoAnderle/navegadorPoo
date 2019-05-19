@@ -38,7 +38,6 @@ public class ParseHtml {
     public boolean detectaTexto(String parse) {
         Pattern p = Pattern.compile("^\\b\\w.*[^<>]$");
         Matcher m = p.matcher(parse);
-        System.out.println(m.matches());
         if (m.matches()) {
             return true;
         } else {
