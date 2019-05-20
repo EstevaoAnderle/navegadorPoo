@@ -5,6 +5,7 @@
  */
 package service;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,19 +19,20 @@ public class ParseHtml {
         if (raiz == null) {
             raiz = new Nos("", "", "");
         }
-        Pattern p = Pattern.compile("<(.*)(\\s?\\w*\\s.*?)?>(.*)<(\\/\\1)>");
+        Pattern p = Pattern.compile("(?s)<(.*)(\\s?\\w*\\s.*?)?>(.*?)<(\\/\\1)>");
         Matcher m = p.matcher(parse);
         while (m.find()) {
-            Nos n = new Nos(m.group(1), m.group(2) == "" ? " " : m.group(2), " ");
+            Nos n = new Nos(m.group(1), m.group(2), " ");
             if (detectaTexto(m.group(3))) {
                 n.texto = m.group(3);
             }
 
-            raiz.noChildren.add(n);
-            System.out.println(n.getNameTag());
-            System.out.println(n.getAtributosTag());
-            System.out.println(n.getTexto());
-            parseArvore(m.group(3), n);
+            
+//            System.out.println(n.getNameTag());
+//            System.out.println(n.getAtributosTag());
+//            System.out.println(n.getTexto());
+            raiz.noChildren.add(parseArvore(m.group(3), n));
+//            parseArvore(m.group(3), n);
         }
         return raiz;
     }
@@ -44,4 +46,6 @@ public class ParseHtml {
             return false;
         }
     }
+    
+   
 }

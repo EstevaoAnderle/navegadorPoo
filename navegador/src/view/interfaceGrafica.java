@@ -11,6 +11,8 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import service.Nos;
@@ -58,7 +60,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
-        pagina = new javax.swing.JTextField();
+        pagina = new java.awt.TextArea();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -183,10 +185,11 @@ public class interfaceGrafica extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTPAbas)
             .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pagina)
-                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,9 +197,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(429, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(91, Short.MAX_VALUE)
+                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap()))
         );
 
         pack();
@@ -216,9 +222,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
 //            nav.urlDown(url, file);
             JFileChooser chooser = new JFileChooser();
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                
+
             }
             BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
+//            BufferedReader br = new BufferedReader(new FileReader(file));
             String linha = "";
             while (br.ready()) {
                 linha += br.readLine();
@@ -226,8 +233,29 @@ public class interfaceGrafica extends javax.swing.JFrame {
             br.close();
 
             ParseHtml p = new ParseHtml();
-           Nos arvore = p.parseArvore(linha, null);
-//           pagina.setText(arvore);
+            Nos arvore = p.parseArvore(linha, null);
+            System.out.println(arvore.getNameTag());
+
+            for (int i = 0; i < arvore.getNoChildren().size(); i++) {
+                if (arvore.getNoChildren().get(i).getTexto() != null) {
+                    pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getTexto());
+                }
+                for (int k = 0; k < arvore.getNoChildren().get(i).getNoChildren().size(); k++) {
+                    if (arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto() != null) {
+                        pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto());
+                    }
+                    for (int l = 0; l < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().size(); l++) {
+                        if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto() != null) {
+                            pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto());
+                        }
+                        for (int m = 0; m < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().size(); m++) {
+                            if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto() != null) {
+                                pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto());
+                            }
+                        }
+                    }
+                }
+            }
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -293,6 +321,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparador;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private javax.swing.JTextField pagina;
+    private java.awt.TextArea pagina;
     // End of variables declaration//GEN-END:variables
 }

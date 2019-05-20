@@ -26,6 +26,14 @@ public class Nos {
         this.texto = texto;
     }
 
+    public ArrayList<Nos> getNoChildren() {
+        return noChildren;
+    }
+
+    public void setNoChildren(ArrayList<Nos> noChildren) {
+        this.noChildren = noChildren;
+    }
+
     public void setNameTag(String nameTag) {
         this.nameTag = nameTag;
     }
