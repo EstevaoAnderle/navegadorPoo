@@ -14,14 +14,80 @@
               <KeyStroke key="Ctrl+H"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Hist&#xf3;rico"/>
+            <Property name="toolTipText" type="java.lang.String" value="Acessar hist&#xf3;rico"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIHistoricoActionPerformed"/>
+          </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMIFavoritos">
+        <Menu class="javax.swing.JMenu" name="jMFavoritos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Favoritos"/>
+            <Property name="toolTipText" type="java.lang.String" value="Ver favoritos"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor Padr&#xe3;o"/>
+            </Property>
           </Properties>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparador">
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIAddFavorito">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+D"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Adicionar p&#xe1;gina aos favoritos"/>
+                <Property name="toolTipText" type="java.lang.String" value="Salvar p&#xe1;gina como favorito"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparador2">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFavRecentes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Favoritos recentes"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFav1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFav2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFav3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFav4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIFav5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparador3">
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMIExibirFavoritos">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Ctrl+B"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Mostrar favoritos"/>
+                <Property name="toolTipText" type="java.lang.String" value="Acessar favoritos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIExibirFavoritosActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparador1">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="jMIModoPrivado">
           <Properties>
@@ -29,6 +95,7 @@
               <KeyStroke key="Shift+Ctrl+N"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modo privativo"/>
+            <Property name="toolTipText" type="java.lang.String" value="Navegar de forma privada"/>
           </Properties>
         </MenuItem>
       </SubComponents>
@@ -36,6 +103,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="Navegador"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -178,6 +246,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/view/icons/voltar.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Voltar uma p&#xe1;gina"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jBAvancar">
@@ -185,6 +254,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/view/icons/avancar.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Avan&#xe7;ar uma p&#xe1;gina"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="jPUrl">
@@ -230,6 +300,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/view/icons/busca_url.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Ir para endere&#xe7;o digitado"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBBuscarUrlActionPerformed"/>
@@ -249,6 +320,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/view/icons/menu.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Abrir menu"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBMenuActionPerformed"/>
@@ -256,7 +328,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="java.awt.TextArea" name="pagina">
+    <Component class="javax.swing.JTextField" name="pagina">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
