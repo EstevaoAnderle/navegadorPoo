@@ -71,7 +71,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
-        pagina = new java.awt.TextArea();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pagina = new javax.swing.JEditorPane();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -241,7 +242,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pagina.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setViewportView(pagina);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -249,11 +250,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTPAbas)
             .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,12 +261,9 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(429, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(91, Short.MAX_VALUE)
-                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -400,11 +397,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPUrl;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
     private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private java.awt.TextArea pagina;
+    private javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 }

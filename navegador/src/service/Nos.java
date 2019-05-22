@@ -15,7 +15,6 @@ import service.Atributos;
 public class Nos {
 
     ArrayList<Nos> noChildren = new ArrayList<Nos>();
-    ArrayList<Atributos> atributos = new ArrayList<Atributos>();
     String nameTag;
     String atributosTag;
     String texto;
@@ -56,9 +55,5 @@ public class Nos {
 
     public void setTexto(String texto) {
         this.texto = texto;
-    }
-
-    public ArrayList<Atributos> getAtributos() {
-        return atributos;
     }
 }

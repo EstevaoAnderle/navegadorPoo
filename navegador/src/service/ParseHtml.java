@@ -32,7 +32,6 @@ public class ParseHtml {
 //            System.out.println(n.getAtributosTag());
 //            System.out.println(n.getTexto());
             raiz.noChildren.add(parseArvore(m.group(3), n));
-//            parseArvore(m.group(3), n);
         }
         return raiz;
     }
@@ -47,5 +46,13 @@ public class ParseHtml {
         }
     }
     
-   
+   public String linkImage(String parse){
+       String linkImage = null;
+       Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");
+        Matcher m = p.matcher(parse);
+        if (m.find()) {
+           linkImage = m.group(0);
+       }
+        return linkImage;
+   }
 }
