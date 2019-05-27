@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import service.Nos;
 import service.ParseHtml;
 import service.navegadorService;
@@ -60,9 +61,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIExibirFavoritos = new javax.swing.JMenuItem();
         jSeparador1 = new javax.swing.JPopupMenu.Separator();
         jMIModoPrivado = new javax.swing.JMenuItem();
+        jPAbas = new javax.swing.JPanel();
+        jBNovaAba = new javax.swing.JButton();
         jTPAbas = new javax.swing.JTabbedPane();
         jPAba1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jPNavegacao = new javax.swing.JPanel();
         jBVoltar = new javax.swing.JButton();
         jBAvancar = new javax.swing.JButton();
@@ -71,7 +73,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
-        pagina = new java.awt.TextArea();
+        pagina = new javax.swing.JTextField();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -134,31 +136,41 @@ public class interfaceGrafica extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Navegador");
 
+        jBNovaAba.setText("+");
+        jBNovaAba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBNovaAbaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPAba1Layout = new javax.swing.GroupLayout(jPAba1);
         jPAba1.setLayout(jPAba1Layout);
         jPAba1Layout.setHorizontalGroup(
             jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 80, Short.MAX_VALUE)
         );
         jPAba1Layout.setVerticalGroup(
             jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jTPAbas.addTab("Aba", jPAba1);
+        jTPAbas.addTab("Nova aba", jPAba1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPAbasLayout = new javax.swing.GroupLayout(jPAbas);
+        jPAbas.setLayout(jPAbasLayout);
+        jPAbasLayout.setHorizontalGroup(
+            jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPAbasLayout.createSequentialGroup()
+                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(216, 216, 216)
+                .addComponent(jBNovaAba)
+                .addContainerGap(271, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPAbasLayout.setVerticalGroup(
+            jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jBNovaAba, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
-
-        jTPAbas.addTab("+", jPanel2);
 
         jBVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/voltar.png"))); // NOI18N
         jBVoltar.setToolTipText("Voltar uma página");
@@ -188,7 +200,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jPUrlLayout.setHorizontalGroup(
             jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPUrlLayout.createSequentialGroup()
-                .addComponent(jTFUrl)
+                .addComponent(jTFUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jBBuscarUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -241,16 +253,14 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pagina.setBackground(new java.awt.Color(255, 255, 255));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTPAbas)
             .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -258,14 +268,14 @@ public class interfaceGrafica extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(429, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(91, Short.MAX_VALUE)
-                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(84, Short.MAX_VALUE)
+                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap()))
         );
 
@@ -302,11 +312,11 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
             for (int i = 0; i < arvore.getNoChildren().size(); i++) {
                 if (arvore.getNoChildren().get(i).getTexto() != null) {
-                    pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getTexto());
+                    pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getTexto());
                 }
                 for (int k = 0; k < arvore.getNoChildren().get(i).getNoChildren().size(); k++) {
                     if (arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto() != null) {
-                        pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto());
+                        pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto());
                     }
                     for (int l = 0; l < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().size(); l++) {
                         if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto() != null) {
@@ -342,6 +352,16 @@ public class interfaceGrafica extends javax.swing.JFrame {
         MenuFavoritos favoritos = new MenuFavoritos();
         favoritos.setVisible(true);
     }//GEN-LAST:event_jMIExibirFavoritosActionPerformed
+
+    private void jBNovaAbaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaAbaActionPerformed
+        JPanel jPAba2 = new JPanel();
+        jPNavegacao.setVisible(false);
+        int altura = jTPAbas.getHeight();
+        //System.out.println(jTPAbas.getSize());
+        jTPAbas.setSize(jPAba1.getWidth() + jPAba1.getWidth(), altura);
+        //System.out.println(jTPAbas.getSize());
+        jTPAbas.add(jPAba2).setBounds(jPAba1.getX() + 1, jPAba1.getY(), jPAba1.getWidth(), jPAba1.getHeight());
+    }//GEN-LAST:event_jBNovaAbaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -382,6 +402,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JButton jBAvancar;
     private javax.swing.JButton jBBuscarUrl;
     private javax.swing.JButton jBMenu;
+    private javax.swing.JButton jBNovaAba;
     private javax.swing.JButton jBUser;
     private javax.swing.JButton jBVoltar;
     private javax.swing.JMenu jMFavoritos;
@@ -396,15 +417,15 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIHistorico;
     private javax.swing.JMenuItem jMIModoPrivado;
     private javax.swing.JPanel jPAba1;
+    private javax.swing.JPanel jPAbas;
     private javax.swing.JPanel jPNavegacao;
     private javax.swing.JPanel jPUrl;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
     private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private java.awt.TextArea pagina;
+    private javax.swing.JTextField pagina;
     // End of variables declaration//GEN-END:variables
 }
