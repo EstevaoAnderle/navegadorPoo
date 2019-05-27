@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import service.Nos;
 import service.ParseHtml;
@@ -275,47 +277,31 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-
+        ArrayList<String> saida = new ArrayList<String>();
         try {
             //testes com arquivo local, html mais simples
 //            URL url = new URL(jTFUrl.getText());
 //            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
 //            nav.urlDown(url, file);
+//            BufferedReader br = new BufferedReader(new FileReader(file));
             JFileChooser chooser = new JFileChooser();
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
             }
             BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-//            BufferedReader br = new BufferedReader(new FileReader(file));
+
             String linha = "";
             while (br.ready()) {
                 linha += br.readLine();
             }
             br.close();
-
             ParseHtml p = new ParseHtml();
             Nos arvore = p.parseArvore(linha, null);
-            System.out.println(arvore.getNameTag());
-
-            for (int i = 0; i < arvore.getNoChildren().size(); i++) {
-                if (arvore.getNoChildren().get(i).getTexto() != null) {
-                    pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getTexto());
-                }
-                for (int k = 0; k < arvore.getNoChildren().get(i).getNoChildren().size(); k++) {
-                    if (arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto() != null) {
-                        pagina.setText(pagina.getText() + "\n" +arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto());
-                    }
-                    for (int l = 0; l < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().size(); l++) {
-                        if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto() != null) {
-                            pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto());
-                        }
-                        for (int m = 0; m < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().size(); m++) {
-                            if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto() != null) {
-                                pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto());
-                            }
-                        }
-                    }
-                }
+            p.render(arvore);
+            saida = p.getSaida();
+            for (int i = 0; i < saida.size(); i++) {
+                pagina.setText(pagina.getText() + "\n" + saida.get(i));
+                pagina.setFont (new java.awt.Font("Arial", Font.ITALIC + Font.BOLD, 12));
             }
 
         } catch (MalformedURLException e) {
@@ -403,6 +389,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private javax.swing.JEditorPane pagina;
+    public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 }

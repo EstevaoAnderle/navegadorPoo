@@ -7,6 +7,7 @@ package service;
 
 import java.util.ArrayList;
 import service.Atributos;
+import view.interfaceGrafica;
 
 /**
  *
@@ -56,4 +57,5 @@ public class Nos {
     public void setTexto(String texto) {
         this.texto = texto;
     }
+
 }
