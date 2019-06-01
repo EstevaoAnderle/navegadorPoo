@@ -5,6 +5,7 @@
  */
 package view;
 
+import view.customized.ButtonTabComponent;
 import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.Iterator;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -67,7 +69,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIModoPrivado = new javax.swing.JMenuItem();
         jPAbas = new javax.swing.JPanel();
         jBNovaAba = new javax.swing.JButton();
-        jTPAbas = new JTabbedPane();
+        jTPAbas = new javax.swing.JTabbedPane();
         jPAba1 = new javax.swing.JPanel();
         jPNavegacao = new javax.swing.JPanel();
         jBVoltar = new javax.swing.JButton();
@@ -147,11 +149,13 @@ public class interfaceGrafica extends javax.swing.JFrame {
             }
         });
 
-        jTPAbas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTPAbas.setRequestFocusEnabled(false);
-
-        jPAba1.setRequestFocusEnabled(false);
-        jPAba1.setVerifyInputWhenFocusTarget(false);
+        jTPAbas.setToolTipText("");
+        jTPAbas.setPreferredSize(new java.awt.Dimension(23, 100));
+        jTPAbas.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentRemoved(java.awt.event.ContainerEvent evt) {
+                jTPAbasComponentRemoved(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPAba1Layout = new javax.swing.GroupLayout(jPAba1);
         jPAba1.setLayout(jPAba1Layout);
@@ -164,23 +168,26 @@ public class interfaceGrafica extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jTPAbas.addTab("Nova aba", jPAba1);
+        jTPAbas.addTab("Nova Aba", jPAba1);
+        int i = jTPAbas.getSelectedIndex();
+        jTPAbas.setTabComponentAt(i, new ButtonTabComponent(jTPAbas));
 
         javax.swing.GroupLayout jPAbasLayout = new javax.swing.GroupLayout(jPAbas);
         jPAbas.setLayout(jPAbasLayout);
         jPAbasLayout.setHorizontalGroup(
             jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPAbasLayout.createSequentialGroup()
-                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(86, 86, 86)
-                .addComponent(jBNovaAba)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addComponent(jTPAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBNovaAba))
         );
         jPAbasLayout.setVerticalGroup(
             jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jBNovaAba, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
+
+        jPNavegacao.setPreferredSize(new java.awt.Dimension(626, 55));
 
         jBVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/voltar.png"))); // NOI18N
         jBVoltar.setToolTipText("Voltar uma página");
@@ -210,7 +217,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jPUrlLayout.setHorizontalGroup(
             jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPUrlLayout.createSequentialGroup()
-                .addComponent(jTFUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                .addComponent(jTFUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jBBuscarUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -272,7 +279,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -281,7 +288,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addComponent(jPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(444, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(84, Short.MAX_VALUE)
@@ -364,22 +371,52 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIExibirFavoritosActionPerformed
 
     private void jBNovaAbaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaAbaActionPerformed
-        //        JPanel jPAba2 = new JPanel();
-                jPNavegacao.setVisible(false);
-        //        int altura = jTPAbas.getHeight();
-        //        //System.out.println(jTPAbas.getSize());
-        //        jTPAbas.setSize(jPAba1.getWidth() + jPAba1.getWidth(), altura);
-        //        //System.out.println(jTPAbas.getSize());
-        //        jTPAbas.add(jPAba2).setBounds(jPAba1.getX() + 1, jPAba1.getY(), jPAba1.getWidth(), jPAba1.getHeight());
 
         int numero = jTPAbas.getTabCount();
 
-        JPanel panel = new JPanel(new BorderLayout());
+        if (this.getExtendedState() == 0) {
+            if (numero <= 8) {
+                JPanel panel = new JPanel(new BorderLayout());
 
-        String titulo = "Aba " + numero;
+                String titulo = "Aba " + numero;
 
-        jTPAbas.addTab(titulo, panel);
+                jTPAbas.addTab(titulo, panel);
+                jTPAbas.setSelectedComponent(panel);
+                int i = jTPAbas.getSelectedIndex();
+                jTPAbas.setTabComponentAt(i, new ButtonTabComponent(jTPAbas));
+            } else {
+                int resposta = JOptionPane.showConfirmDialog(null, "Para adicionar mais abas, "
+                        + "é necessário maximizar seu navegador. Deseja fazer "
+                        + "isso agora?", "Deseja adicionar mais abas?", JOptionPane.YES_NO_OPTION);
+                if (resposta == JOptionPane.YES_OPTION) {
+                    this.setExtendedState(MAXIMIZED_BOTH);
+                }
+            }
+        } else {
+            if (numero <= 18) {
+                JPanel panel = new JPanel(new BorderLayout());
+
+                String titulo = "Aba " + numero;
+
+                jTPAbas.addTab(titulo, panel);
+                jTPAbas.setSelectedComponent(panel);
+                int i = jTPAbas.getSelectedIndex();
+                jTPAbas.setTabComponentAt(i, new ButtonTabComponent(jTPAbas));
+            } else {
+                JOptionPane.showMessageDialog(null, "Você alcançou o número máximo de abas");
+                jBNovaAba.setEnabled(false);
+            }
+        }
     }//GEN-LAST:event_jBNovaAbaActionPerformed
+
+    private void jTPAbasComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTPAbasComponentRemoved
+        if (jTPAbas.getTabCount() <= 0) {
+            System.exit(0);
+        }
+        if (!jBNovaAba.isEnabled()) {
+            jBNovaAba.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTPAbasComponentRemoved
 
     /**
      * @param args the command line arguments
