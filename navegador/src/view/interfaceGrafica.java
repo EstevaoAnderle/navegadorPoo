@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
 import service.Nos;
 import service.ParseHtml;
 import service.navegadorService;
@@ -63,7 +67,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIModoPrivado = new javax.swing.JMenuItem();
         jPAbas = new javax.swing.JPanel();
         jBNovaAba = new javax.swing.JButton();
-        jTPAbas = new javax.swing.JTabbedPane();
+        jTPAbas = new JTabbedPane();
         jPAba1 = new javax.swing.JPanel();
         jPNavegacao = new javax.swing.JPanel();
         jBVoltar = new javax.swing.JButton();
@@ -143,11 +147,17 @@ public class interfaceGrafica extends javax.swing.JFrame {
             }
         });
 
+        jTPAbas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jTPAbas.setRequestFocusEnabled(false);
+
+        jPAba1.setRequestFocusEnabled(false);
+        jPAba1.setVerifyInputWhenFocusTarget(false);
+
         javax.swing.GroupLayout jPAba1Layout = new javax.swing.GroupLayout(jPAba1);
         jPAba1.setLayout(jPAba1Layout);
         jPAba1Layout.setHorizontalGroup(
             jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPAba1Layout.setVerticalGroup(
             jPAba1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,10 +171,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jPAbasLayout.setHorizontalGroup(
             jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPAbasLayout.createSequentialGroup()
-                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(216, 216, 216)
+                .addComponent(jTPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
                 .addComponent(jBNovaAba)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         jPAbasLayout.setVerticalGroup(
             jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +210,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jPUrlLayout.setHorizontalGroup(
             jPUrlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPUrlLayout.createSequentialGroup()
-                .addComponent(jTFUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addComponent(jTFUrl, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jBBuscarUrl, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -262,7 +272,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -354,13 +364,21 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIExibirFavoritosActionPerformed
 
     private void jBNovaAbaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaAbaActionPerformed
-        JPanel jPAba2 = new JPanel();
-        jPNavegacao.setVisible(false);
-        int altura = jTPAbas.getHeight();
-        //System.out.println(jTPAbas.getSize());
-        jTPAbas.setSize(jPAba1.getWidth() + jPAba1.getWidth(), altura);
-        //System.out.println(jTPAbas.getSize());
-        jTPAbas.add(jPAba2).setBounds(jPAba1.getX() + 1, jPAba1.getY(), jPAba1.getWidth(), jPAba1.getHeight());
+        //        JPanel jPAba2 = new JPanel();
+                jPNavegacao.setVisible(false);
+        //        int altura = jTPAbas.getHeight();
+        //        //System.out.println(jTPAbas.getSize());
+        //        jTPAbas.setSize(jPAba1.getWidth() + jPAba1.getWidth(), altura);
+        //        //System.out.println(jTPAbas.getSize());
+        //        jTPAbas.add(jPAba2).setBounds(jPAba1.getX() + 1, jPAba1.getY(), jPAba1.getWidth(), jPAba1.getHeight());
+
+        int numero = jTPAbas.getTabCount();
+
+        JPanel panel = new JPanel(new BorderLayout());
+
+        String titulo = "Aba " + numero;
+
+        jTPAbas.addTab(titulo, panel);
     }//GEN-LAST:event_jBNovaAbaActionPerformed
 
     /**
@@ -375,7 +393,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     break;
                 }
             }
