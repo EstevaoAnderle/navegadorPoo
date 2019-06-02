@@ -5,7 +5,12 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageProducer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,10 +20,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import service.Nos;
 import service.ParseHtml;
+import service.Render;
 import service.navegadorService;
 
 /**
@@ -28,6 +38,7 @@ import service.navegadorService;
 public class interfaceGrafica extends javax.swing.JFrame {
 
     navegadorService nav = new navegadorService();
+    Render rend = new Render();
 
     /**
      * Creates new form interfaceGrafica
@@ -244,6 +255,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        pagina.setContentType(""); // NOI18N
+        pagina.setToolTipText("");
         jScrollPane1.setViewportView(pagina);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,38 +290,39 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-        ArrayList<String> saida = new ArrayList<String>();
+        ArrayList<String> imagens = new ArrayList<String>();
+        String titulo = jTFUrl.getText();
         try {
             //testes com arquivo local, html mais simples
-//            URL url = new URL(jTFUrl.getText());
-//            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
-//            nav.urlDown(url, file);
-//            BufferedReader br = new BufferedReader(new FileReader(file));
-            JFileChooser chooser = new JFileChooser();
-            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            String texto = null;
+//            JFileChooser chooser = new JFileChooser();
+//            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//
+//            }
+//            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
+//            String linha = "";
+//            while (br.ready()) {
+//                while (br.ready()) {
+//                    linha += br.readLine();
+//                }
+//            }
+//            br.close();
+//            br.close();
 
-            }
-            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
+            URL url = new URL(jTFUrl.getText());
+            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
 
-            String linha = "";
-            while (br.ready()) {
-                linha += br.readLine();
-            }
-            br.close();
+            texto = nav.urlDown(url, file);
+            //Imagem
+            //Parser Texto
             ParseHtml p = new ParseHtml();
-            Nos arvore = p.parseArvore(linha, null);
-            p.render(arvore);
-            saida = p.getSaida();
-            for (int i = 0; i < saida.size(); i++) {
-                pagina.setText(pagina.getText() + "\n" + saida.get(i));
-                pagina.setFont (new java.awt.Font("Arial", Font.ITALIC + Font.BOLD, 12));
-            }
-
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+            imagens = p.linkImage(texto, titulo);
+            Nos arvore = p.parseArvore(texto, null);
+            rend.render(arvore, pagina);
+            rend.renderTela(pagina, imagens);
         } catch (Exception e) {
-            e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
@@ -391,4 +405,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTPAbas;
     public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
+
+    public void paintComponent(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

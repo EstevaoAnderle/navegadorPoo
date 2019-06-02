@@ -18,7 +18,7 @@ import view.interfaceGrafica;
  */
 public class ParseHtml extends interfaceGrafica {
 
-    ArrayList<String> saida = new ArrayList<String>();
+    ArrayList<String> imagens = new ArrayList<String>();
 
     public Nos parseArvore(String parse, Nos raiz) {
         if (raiz == null) {
@@ -37,38 +37,6 @@ public class ParseHtml extends interfaceGrafica {
         return raiz;
     }
 
-    public void render(Nos parser) {
-
-        for (Iterator<Nos> it = parser.getNoChildren().iterator(); it.hasNext();) {
-            Nos item = it.next();
-            if (item.texto == " ") {
-                render(item);
-            } else {
-                renderFinal(item);
-            }
-
-        }
-    }
-
-    public void renderFinal(Nos parser) {
-        switch (parser.nameTag) {
-            case "a":
-                
-                break;
-            case "img":
-                
-                break;
-            case "h1":
-                parser.texto = "<B>" + parser.texto;
-                break;
-        }
-        saida.add(parser.texto);
-    }
-
-    public ArrayList<String> getSaida() {
-        return saida;
-    }
-
     public boolean detectaTexto(String parse) {
         Pattern p = Pattern.compile("^\\b\\w.*[^<>]$");
         Matcher m = p.matcher(parse);
@@ -79,13 +47,19 @@ public class ParseHtml extends interfaceGrafica {
         }
     }
 
-    public String linkImage(String parse) {
+    public ArrayList<String> linkImage(String parse, String titulo) {
         String linkImage = null;
         Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");
         Matcher m = p.matcher(parse);
-        if (m.find()) {
-            linkImage = m.group(0);
+        while(m.find()) {
+            Pattern p2 = Pattern.compile("http:?[\\/\\/]?.*?");
+            Matcher m2 = p.matcher(m.group(1));
+            if (m2.find()) {
+                imagens.add(m.group(1));
+            }else{
+                imagens.add(titulo+m.group(1));
+            }
         }
-        return linkImage;
+        return imagens;
     }
 }
