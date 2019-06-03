@@ -5,8 +5,7 @@
  */
 package view;
 
-import view.customized.ButtonTabComponent;
-import java.awt.BorderLayout;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -79,7 +79,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
-        pagina = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pagina = new javax.swing.JEditorPane();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -270,17 +271,17 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jScrollPane1.setViewportView(pagina);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPAbas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,12 +289,9 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addComponent(jPAbas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(444, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(84, Short.MAX_VALUE)
-                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -305,47 +303,31 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-
+        ArrayList<String> saida = new ArrayList<String>();
         try {
             //testes com arquivo local, html mais simples
 //            URL url = new URL(jTFUrl.getText());
 //            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
 //            nav.urlDown(url, file);
+//            BufferedReader br = new BufferedReader(new FileReader(file));
             JFileChooser chooser = new JFileChooser();
             if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 
             }
             BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-//            BufferedReader br = new BufferedReader(new FileReader(file));
+
             String linha = "";
             while (br.ready()) {
                 linha += br.readLine();
             }
             br.close();
-
             ParseHtml p = new ParseHtml();
             Nos arvore = p.parseArvore(linha, null);
-            System.out.println(arvore.getNameTag());
-
-            for (int i = 0; i < arvore.getNoChildren().size(); i++) {
-                if (arvore.getNoChildren().get(i).getTexto() != null) {
-                    pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getTexto());
-                }
-                for (int k = 0; k < arvore.getNoChildren().get(i).getNoChildren().size(); k++) {
-                    if (arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto() != null) {
-                        pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getTexto());
-                    }
-                    for (int l = 0; l < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().size(); l++) {
-                        if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto() != null) {
-                            pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getTexto());
-                        }
-                        for (int m = 0; m < arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().size(); m++) {
-                            if (arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto() != null) {
-                                pagina.setText(pagina.getText() + "\n" + arvore.getNoChildren().get(i).getNoChildren().get(k).getNoChildren().get(l).getNoChildren().get(m).getTexto());
-                            }
-                        }
-                    }
-                }
+            p.render(arvore);
+            saida = p.getSaida();
+            for (int i = 0; i < saida.size(); i++) {
+                pagina.setText(pagina.getText() + "\n" + saida.get(i));
+                pagina.setFont (new java.awt.Font("Arial", Font.ITALIC + Font.BOLD, 12));
             }
 
         } catch (MalformedURLException e) {
@@ -476,11 +458,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPNavegacao;
     private javax.swing.JPanel jPUrl;
     private javax.swing.JPopupMenu jPopupMenu;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
     private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private javax.swing.JTextField pagina;
+    public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 }
