@@ -13,7 +13,9 @@ import java.util.regex.Pattern;
  *
  * @author lenon.060194
  */
-public class ParseHtml {
+public class ParseHtml extends interfaceGrafica {
+
+    ArrayList<String> imagens = new ArrayList<String>();
 
     public Nos parseArvore(String parse, Nos raiz) {
         if (raiz == null) {
@@ -46,6 +48,20 @@ public class ParseHtml {
             return false;
         }
     }
-    
-   
+
+    public ArrayList<String> linkImage(String parse, String titulo) {
+        String linkImage = null;
+        Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");
+        Matcher m = p.matcher(parse);
+        while(m.find()) {
+            Pattern p2 = Pattern.compile("http:?[\\/\\/]?.*?");
+            Matcher m2 = p.matcher(m.group(1));
+            if (m2.find()) {
+                imagens.add(m.group(1));
+            }else{
+                imagens.add(titulo+m.group(1));
+            }
+        }
+        return imagens;
+    }
 }
