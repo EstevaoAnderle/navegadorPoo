@@ -150,6 +150,15 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         jTPAbas.addTab("Aba", jPAba1);
 
+        javax.swing.GroupLayout jPAbasLayout = new javax.swing.GroupLayout(jPAbas);
+        jPAbas.setLayout(jPAbasLayout);
+        jPAbasLayout.setHorizontalGroup(
+            jPAbasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPAbasLayout.createSequentialGroup()
+                .addComponent(jTPAbas, javax.swing.GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBNovaAba)
+                .addContainerGap())
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
