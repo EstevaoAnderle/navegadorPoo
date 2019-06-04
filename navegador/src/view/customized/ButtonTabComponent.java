@@ -42,7 +42,6 @@ public class ButtonTabComponent extends JPanel {
             }
         };
 
-        //daushdaiushuida
         add(label);
         //adiciona mais espaço entre a label e o botão
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
