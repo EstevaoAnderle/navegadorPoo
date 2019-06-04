@@ -6,11 +6,8 @@
 package service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.scene.control.Pagination;
-import view.interfaceGrafica;
 
 /**
  *
@@ -32,7 +29,12 @@ public class ParseHtml extends interfaceGrafica {
                 n.texto = m.group(3);
             }
 
+            
+//            System.out.println(n.getNameTag());
+//            System.out.println(n.getAtributosTag());
+//            System.out.println(n.getTexto());
             raiz.noChildren.add(parseArvore(m.group(3), n));
+//            parseArvore(m.group(3), n);
         }
         return raiz;
     }

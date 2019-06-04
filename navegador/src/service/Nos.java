@@ -7,7 +7,6 @@ package service;
 
 import java.util.ArrayList;
 import service.Atributos;
-import view.interfaceGrafica;
 
 /**
  *
@@ -16,6 +15,7 @@ import view.interfaceGrafica;
 public class Nos {
 
     ArrayList<Nos> noChildren = new ArrayList<Nos>();
+    ArrayList<Atributos> atributos = new ArrayList<Atributos>();
     String nameTag;
     String atributosTag;
     String texto;
@@ -58,4 +58,7 @@ public class Nos {
         this.texto = texto;
     }
 
+    public ArrayList<Atributos> getAtributos() {
+        return atributos;
+    }
 }
