@@ -10,22 +10,12 @@ package model.bean;
  * @author Lenon
  */
 public class Usuario {
-    
+
     private int id;
     private String nome;
     private String login;
     private String senha;
 
-    public Usuario() {
-    }
-
-    public Usuario( String nome, String login, String senha) {
-        this.nome = nome;
-        this.login = login;
-        this.senha = senha;
-    }
-
-    
     public int getId() {
         return id;
     }
@@ -57,8 +47,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    
-    
-    
+
 }

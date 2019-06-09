@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.JEditorPane;
 import model.bean.Usuario;
+import model.dao.usuarioDAO;
 
 /**
  *
@@ -30,7 +31,7 @@ public class navegadorService {
     Image imagemPagina;
 
     public navegadorService() {
-        Usuario user = new Usuario("default", "dafault", "default");
+        usuarioDAO dao = new usuarioDAO();
     }
 
     public String urlDown(URL url, File file) throws IOException {

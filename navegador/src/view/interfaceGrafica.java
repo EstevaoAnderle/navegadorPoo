@@ -19,6 +19,9 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javafx.stage.FileChooser;
@@ -33,6 +36,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import service.Nos;
 import service.ParseHtml;
@@ -93,7 +97,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jBBuscarUrl = new javax.swing.JButton();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
-        pagina = new javax.swing.JTextField();
+        jSPPagina = new javax.swing.JScrollPane();
+        pagina = new javax.swing.JEditorPane();
 
         jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
         jMIHistorico.setText("Histórico");
@@ -245,6 +250,11 @@ public class interfaceGrafica extends javax.swing.JFrame {
         );
 
         jBUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/user.png"))); // NOI18N
+        jBUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBUserActionPerformed(evt);
+            }
+        });
 
         jBMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/menu.png"))); // NOI18N
         jBMenu.setToolTipText("Abrir menu");
@@ -286,7 +296,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         pagina.setContentType(""); // NOI18N
         pagina.setToolTipText("");
-        jScrollPane1.setViewportView(pagina);
+        jSPPagina.setViewportView(pagina);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,7 +307,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(pagina, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
+                    .addComponent(jSPPagina, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -309,8 +319,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 .addContainerGap(444, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(84, Short.MAX_VALUE)
-                    .addComponent(pagina, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(84, 84, 84)
+                    .addComponent(jSPPagina, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                     .addContainerGap()))
         );
 
@@ -323,6 +333,14 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
+        //Historico h = new Historico();
+        //historicoDAO hDAO = new historicoDAO();
+        //adicionar tratamento para pegar o Title
+        //h.setPagina(pagina);
+        //h.setUrl(jTFUrl.getText());
+        //h.setData_acesso();
+        //hDAO.create(h);
+
         ArrayList<String> imagens = new ArrayList<String>();
         String titulo = jTFUrl.getText();
         try {
@@ -343,7 +361,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
 //            br.close();
 
             URL url = new URL(jTFUrl.getText());
-            File file = new File("C:\\Users\\Lenon\\Desktop\\page.html");
+            File file = new File("page.html");
 
             texto = nav.urlDown(url, file);
             //Imagem
@@ -355,7 +373,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
             rend.renderTela(pagina, imagens);
         } catch (Exception e) {
         }
-
 
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
@@ -387,6 +404,19 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 jTPAbas.setSelectedComponent(panel);
                 int i = jTPAbas.getSelectedIndex();
                 jTPAbas.setTabComponentAt(i, new ButtonTabComponent(jTPAbas));
+                //jTFUrl.setVisible(false);
+                //JTextField jTFNewUrl = new JTextField();
+                //jTFNewUrl.setSize(jTFUrl.getSize());
+                //jTFNewUrl.setVisible(true);
+                //jTFNewUrl.setLocation(jTFUrl.getLocation());
+                //jPUrl.add(jTFNewUrl);
+
+//                pagina.setVisible(false);//Criei isso para ocultar a página inicial que é exibida ao instanciar o navegador
+//                JEditorPane newPagina = new JEditorPane();
+//                newPagina.setSize(pagina.getSize());
+//                newPagina.setVisible(true);
+//                newPagina.setLocation(pagina.getLocation());
+//                jSPPagina.add(newPagina);
             } else {
                 int resposta = JOptionPane.showConfirmDialog(null, "Para adicionar mais abas, "
                         + "é necessário maximizar seu navegador. Deseja fazer "
@@ -410,6 +440,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 jBNovaAba.setEnabled(false);
             }
         }
+
     }//GEN-LAST:event_jBNovaAbaActionPerformed
 
     private void jTPAbasComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTPAbasComponentRemoved
@@ -420,6 +451,11 @@ public class interfaceGrafica extends javax.swing.JFrame {
             jBNovaAba.setEnabled(true);
         }
     }//GEN-LAST:event_jTPAbasComponentRemoved
+
+    private void jBUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUserActionPerformed
+        TelaLogin login = new TelaLogin();
+        login.setVisible(true);
+    }//GEN-LAST:event_jBUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -479,12 +515,13 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPNavegacao;
     private javax.swing.JPanel jPUrl;
     private javax.swing.JPopupMenu jPopupMenu;
+    private javax.swing.JScrollPane jSPPagina;
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
     private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
-    private javax.swing.JTextField pagina;
+    public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 
     public void paintComponent(Graphics g) {

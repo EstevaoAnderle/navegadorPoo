@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.bean.Usuario;
-import model.bean.historico;
+import model.bean.Historico;
 
 /**
  *
@@ -21,48 +21,48 @@ import model.bean.historico;
  */
 public class historicoDAO {
 
-    private Connection con = null;
+    public boolean create(Historico his) {
 
-    public historicoDAO() {
-        con = connectionFactory.getConnection();
-    }
-
-    public boolean save(historico his) {
-        String sql = "INSERT INTO historico (pagina, url, data_acesso, id_usuario, favorito) VALUES (?, ?, ?, ?, ?)";
+        Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
+            String sql = "INSERT INTO historico (pagina, url, data_acesso, id_usuario, favorito) VALUES (?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, his.getPagina());
             stmt.setString(2, his.getUrl());
-            stmt.setString(3, his.getData_acesso());
+            stmt.setDate(3, his.getData_acesso());
             stmt.setInt(4, his.getId_usuario().getId());
             stmt.setBoolean(5, his.isFavorito());
+
             stmt.executeUpdate();
             return true;
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
             return false;
+        } finally {
+            connectionFactory.closeConnection(con, stmt);
         }
     }
 
-    public List<historico> getAll() {
+    public List<Historico> getAll() {
+        Connection con = connectionFactory.getConnection();
         String sql = "SELECT h.id, h.pagina, h.url, h.data_acesso, h.id_usuario, h.favorito FROM historico as h"
-                     + " INNER JOIN usuario on h.id_usuario = usuario.id";
+                + " INNER JOIN usuario AS u ON h.id_usuario = u.id";
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<historico> his = new ArrayList<>();
+        List<Historico> his = new ArrayList<>();
 
         try {
             stmt = con.prepareStatement(sql);
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                historico hist = new historico();
+                Historico hist = new Historico();
                 hist.setId(rs.getInt("id"));
                 hist.setPagina(rs.getString("pagina"));
                 hist.setUrl(rs.getString("url"));
-                hist.setData_acesso(rs.getString("data_acesso"));
-                
+                hist.setData_acesso(rs.getDate("data_acesso"));
+
                 Usuario user = new Usuario();
                 user.setId(rs.getInt("id_usuario"));
                 hist.setId_usuario(user);
@@ -72,7 +72,7 @@ public class historicoDAO {
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
         } finally {
-            connectionFactory.closeConnection(con, (com.mysql.jdbc.PreparedStatement) stmt, rs);
+            connectionFactory.closeConnection(con, stmt);
         }
         return his;
     }
