@@ -5,8 +5,7 @@
  */
 package connection;
 
-
-import com.mysql.jdbc.PreparedStatement;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,20 +17,20 @@ import java.sql.SQLException;
  */
 public class connectionFactory {
 
-    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/navegador";
     private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "root";
 
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new RuntimeException("Erro na conexão", ex);
+            throw new RuntimeException("Falha na conexão, verifique.", ex);
         }
     }
-    
+
     public static void closeConnection(Connection con) {
         if (con != null) {
             try {
@@ -41,20 +40,24 @@ public class connectionFactory {
             }
         }
     }
-    
+
     public static void closeConnection(Connection con, PreparedStatement stmt) {
+
+        closeConnection(con);
+
         if (stmt != null) {
             try {
                 stmt.close();
             } catch (SQLException ex) {
-               System.err.println("Erro close" + ex);
+                System.err.println("Erro close" + ex);
             }
         }
-        
-        closeConnection(con);
     }
-    
+
     public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
+
+        closeConnection(con, stmt);
+
         if (rs != null) {
             try {
                 rs.close();
@@ -62,7 +65,13 @@ public class connectionFactory {
                 System.err.println("Erro close" + ex);
             }
         }
-        
-        closeConnection(con, stmt);
     }
+
+    //https://www.youtube.com/watch?v=i5INLVcrMAg
+    //https://dev.mysql.com/downloads/file/?id=485766
+    //https://stackoverflow.com/questions/50387952/how-to-resolve-unable-to-load-authentication-plugin-caching-sha2-password-issu/50433762#50433762
+    //https://stackoverflow.com/questions/46131295/classcastexception-java-math-biginteger-cannot-be-cast-to-java-lang-long-on-con
+    //https://www.youtube.com/watch?v=IWcV-9Lcu64
+    //https://www.devmedia.com.br/forum/salvar-data-e-hora-no-bd/569558
+    //https://blog.alura.com.br/pegando-a-data-atual-em-java/
 }

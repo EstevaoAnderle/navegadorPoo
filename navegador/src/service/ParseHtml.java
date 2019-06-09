@@ -8,6 +8,7 @@ package service;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import view.interfaceGrafica;
 
 /**
  *
@@ -29,7 +30,6 @@ public class ParseHtml extends interfaceGrafica {
                 n.texto = m.group(3);
             }
 
-            
 //            System.out.println(n.getNameTag());
 //            System.out.println(n.getAtributosTag());
 //            System.out.println(n.getTexto());
@@ -53,13 +53,13 @@ public class ParseHtml extends interfaceGrafica {
         String linkImage = null;
         Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");
         Matcher m = p.matcher(parse);
-        while(m.find()) {
+        while (m.find()) {
             Pattern p2 = Pattern.compile("http:?[\\/\\/]?.*?");
             Matcher m2 = p.matcher(m.group(1));
             if (m2.find()) {
                 imagens.add(m.group(1));
-            }else{
-                imagens.add(titulo+m.group(1));
+            } else {
+                imagens.add(titulo + m.group(1));
             }
         }
         return imagens;

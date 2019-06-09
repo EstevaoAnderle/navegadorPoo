@@ -5,23 +5,25 @@
  */
 package model.bean;
 
+import java.sql.Date;
+
 /**
  *
  * @author Lenon
  */
-public class historico {
-    
+public class Historico {
+
     private int id;
     private String pagina;
     private String url;
-    private String data_acesso;
+    private Date data_acesso;
     private Usuario id_usuario;
     private boolean favorito;
 
-    public historico() {
+    public Historico() {
     }
 
-    public historico(String pagina, String url, String data_acesso, Usuario id_usuario, boolean favorito) {
+    public Historico(String pagina, String url, Date data_acesso, Usuario id_usuario, boolean favorito) {
         this.pagina = pagina;
         this.url = url;
         this.data_acesso = data_acesso;
@@ -29,7 +31,6 @@ public class historico {
         this.favorito = favorito;
     }
 
-        
     public int getId() {
         return id;
     }
@@ -54,11 +55,11 @@ public class historico {
         this.url = url;
     }
 
-    public String getData_acesso() {
+    public Date getData_acesso() {
         return data_acesso;
     }
 
-    public void setData_acesso(String data_acesso) {
+    public void setData_acesso(Date data_acesso) {
         this.data_acesso = data_acesso;
     }
 
@@ -77,5 +78,5 @@ public class historico {
     public void setFavorito(boolean favorito) {
         this.favorito = favorito;
     }
-    
+
 }

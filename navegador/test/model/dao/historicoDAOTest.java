@@ -7,7 +7,7 @@ package model.dao;
 
 import java.sql.DataTruncation;
 import model.bean.Usuario;
-import model.bean.historico;
+import model.bean.Historico;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author Lenon
  */
 public class historicoDAOTest {
-    
+
     public historicoDAOTest() {
     }
 
@@ -24,33 +24,35 @@ public class historicoDAOTest {
     public void inserirHistorico() {
         Usuario u = new Usuario();
         u.setId(1);
-        
-        historico h = new historico();
+
+        Historico h = new Historico();
         h.setPagina("google");
         h.setUrl("www.google.com");
         h.setId_usuario(u);
-        h.setData_acesso("12/10/2005");
+
+        //VERIFICAR
+        //h.setData_acesso();
         h.setFavorito(true);
-        
+
         historicoDAO dao = new historicoDAO();
-        
-        if (dao.save(h)) {
+
+        if (dao.create(h)) {
             System.out.println("Salvo com sucesso");
         } else {
             System.out.println("Erro ao salvar");
         }
     }
-    
-       @Test
+
+    @Test
     public void obter() {
         historicoDAO dao = new historicoDAO();
-        for (historico his: dao.getAll() ) {
+        for (Historico his : dao.getAll()) {
             System.out.println(his.getId());
             System.out.println(his.getPagina());
             System.out.println(his.getUrl());
             System.out.println(his.getId_usuario().getId());
             System.out.println(his.isFavorito());
-        }   
+        }
     }
-    
+
 }
