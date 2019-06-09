@@ -24,6 +24,7 @@ CREATE TABLE historico (
     url VARCHAR(45),
     data_acesso DATETIME,
     id_usuario INT NOT NULL,
-		FOREIGN KEY (id_usuario) REFERENCES usuario(id)
+		FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    favorito BOOLEAN	
 ); 
     
