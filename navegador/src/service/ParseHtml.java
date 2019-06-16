@@ -30,11 +30,7 @@ public class ParseHtml extends interfaceGrafica {
                 n.texto = m.group(3);
             }
 
-//            System.out.println(n.getNameTag());
-//            System.out.println(n.getAtributosTag());
-//            System.out.println(n.getTexto());
             raiz.noChildren.add(parseArvore(m.group(3), n));
-//            parseArvore(m.group(3), n);
         }
         return raiz;
     }
@@ -48,6 +44,20 @@ public class ParseHtml extends interfaceGrafica {
             return false;
         }
     }
+
+    public String extrairTitulo(String parse) {
+        Pattern p = Pattern.compile("<title>(.*)<\\/title>");
+        Matcher m = p.matcher(parse);
+        String titulo = null;
+        if (m.find()) {
+            titulo = m.group(1);
+        }
+        return titulo;
+    }
+
+//    public boolean malFormaçãoHtml(String parse) {
+//
+//    }
 
     public ArrayList<String> linkImage(String parse, String titulo) {
         String linkImage = null;

@@ -19,11 +19,15 @@ import view.interfaceGrafica;
  * @author Lenon
  */
 public class Render {
-
+    JEditorPane pa = new JEditorPane();
     String txt = " ";
-
+/**
+ * 
+ * @param parser Nós com as tags html populadas
+ * @param pagina JEditorPane para exibição
+ */
     public void render(Nos parser, JEditorPane pagina) {
-
+        txt = " ";
         for (Nos item : parser.getNoChildren()) {
             if (item.texto == " ") {
                 render(item, pagina);
@@ -32,7 +36,11 @@ public class Render {
             }
         }
     }
-
+/**
+ * 
+ * @param parser Nós com as tags populadas
+ * Metodo aplica estilo as tags e concatna a uma string
+ */
     public void renderFinal(Nos parser) {
         
         switch (parser.nameTag) {
@@ -52,7 +60,11 @@ public class Render {
         }
 
     }
-
+    /**
+     * 
+     * @param pagina JEditorPane para exibição
+     * @param imagem ArrayList de imagens para ser exibida na pagina
+     */
     public void renderTela(JEditorPane pagina, ArrayList imagem) {
         for (int i = 0; i < imagem.size(); i++) {
          txt += "<img src="+imagem.get(i).toString()+">";

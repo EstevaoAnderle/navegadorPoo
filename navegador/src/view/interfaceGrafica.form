@@ -312,6 +312,9 @@
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Voltar uma p&#xe1;gina"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBVoltarActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBAvancar">
                   <Properties>
@@ -320,6 +323,9 @@
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Avan&#xe7;ar uma p&#xe1;gina"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBAvancarActionPerformed"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jPUrl">
                   <Properties>
