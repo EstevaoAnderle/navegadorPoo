@@ -11,10 +11,10 @@ package model.bean;
  */
 public class Usuario {
 
-    private int id;
-    private String nome;
-    private String login;
-    private String senha;
+    protected int id;
+    protected String nome;
+    protected String login;
+    protected String senha;
 
     public int getId() {
         return id;

@@ -13,12 +13,12 @@ import java.sql.Date;
  */
 public class Historico {
 
-    private int id;
-    private String pagina;
-    private String url;
-    private Date data_acesso;
-    private Usuario id_usuario;
-    private boolean favorito;
+    protected int id;
+    protected String pagina;
+    protected String url;
+    protected Date data_acesso;
+    protected Usuario id_usuario;
+    protected boolean favorito;
 
     public Historico() {
     }

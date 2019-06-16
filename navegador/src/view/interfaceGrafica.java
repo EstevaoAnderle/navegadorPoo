@@ -6,12 +6,13 @@
 package view;
 
 import view.customized.ButtonTabComponent;
-import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 import service.Nos;
 import service.ParseHtml;
@@ -27,12 +28,19 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
     navegadorService nav = new navegadorService();
     Render rend = new Render();
+    Pilha pilha = new Pilha();
 
     /**
      * Creates new form interfaceGrafica
      */
     public interfaceGrafica() {
         initComponents();
+        if (pilha.pilhaEsquerda.empty()) {
+            jBVoltar.setEnabled(false);
+        }
+        if (pilha.pilhaDireita.empty()) {
+            jBAvancar.setEnabled(false);
+        }
         //Isso faz com que ele sempre inicie centralizado
         this.setLocationRelativeTo(null);
     }
@@ -203,9 +211,19 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         jBVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/voltar.png"))); // NOI18N
         jBVoltar.setToolTipText("Voltar uma página");
+        jBVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBVoltarActionPerformed(evt);
+            }
+        });
 
         jBAvancar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/avancar.png"))); // NOI18N
         jBAvancar.setToolTipText("Avançar uma página");
+        jBAvancar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBAvancarActionPerformed(evt);
+            }
+        });
 
         jPUrl.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -325,10 +343,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
         //hDAO.create(h);
 
         ArrayList<String> imagens = new ArrayList<String>();
-        String titulo = jTFUrl.getText();
+        String urlAcesso = jTFUrl.getText();
+
+        String texto = null;
+        String titulo = null;
         try {
             //testes com arquivo local, html mais simples
-            String texto = null;
 //            JFileChooser chooser = new JFileChooser();
 //            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 //
@@ -342,18 +362,34 @@ public class interfaceGrafica extends javax.swing.JFrame {
 //            }
 //            br.close();
 //            br.close();
-
+            
+            /*  Alguns sites que renderizam rápido
+                http://po.ta.to/
+                http://www.ismycomputeron.com/
+                http://www.pudim.com.br/
+            */ 
             URL url = new URL(jTFUrl.getText());
             File file = new File("page.html");
 
-            //texto = nav.urlDown(url, file);
+            texto = nav.urlDown(url, file);
             //Imagem
             //Parser Texto
             ParseHtml p = new ParseHtml();
-            imagens = p.linkImage(texto, titulo);
+            titulo = p.extrairTitulo(texto);
+
+            imagens = p.linkImage(texto, urlAcesso);
             Nos arvore = p.parseArvore(texto, null);
             rend.render(arvore, pagina);
             rend.renderTela(pagina, imagens);
+
+            if (!pilha.pilhaEsquerda.empty()) {
+                jBVoltar.setEnabled(true);
+            }
+            pilha.pilhaEsquerda.push(urlAcesso);
+            if (evt.getSource().equals(jBBuscarUrl)) {
+                pilha.limparPilhaDireita();
+                jBAvancar.setEnabled(false);
+            }
         } catch (Exception e) {
         }
 
@@ -415,6 +451,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
         }
         if (!jBNovaAba.isEnabled()) {
             jBNovaAba.setEnabled(true);
+        } else {
+            jBNovaAba.setEnabled(false);
         }
     }//GEN-LAST:event_jTPAbasComponentRemoved
 
@@ -422,6 +460,30 @@ public class interfaceGrafica extends javax.swing.JFrame {
         TelaLogin login = new TelaLogin();
         login.setVisible(true);
     }//GEN-LAST:event_jBUserActionPerformed
+
+    private void jBVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoltarActionPerformed
+
+        String ultimaUrl = pilha.pilhaEsquerda.empty() ? "" : pilha.voltar();
+        jTFUrl.setText(ultimaUrl);
+        jBBuscarUrlActionPerformed(evt);
+        if (pilha.pilhaEsquerda.empty()) {
+            jBVoltar.setEnabled(false);
+        }
+        jBAvancar.setEnabled(true);
+    }//GEN-LAST:event_jBVoltarActionPerformed
+
+    private void jBAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvancarActionPerformed
+
+        String proximaUrl = pilha.pilhaDireita.empty() ? "" : pilha.avancar();
+        jTFUrl.setText(proximaUrl);
+        jBBuscarUrlActionPerformed(evt);
+        if (pilha.pilhaDireita.empty()) {
+            jBAvancar.setEnabled(false);
+        }
+        if (pilha.pilhaEsquerda.empty()) {
+            jBVoltar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jBAvancarActionPerformed
 
     /**
      * @param args the command line arguments

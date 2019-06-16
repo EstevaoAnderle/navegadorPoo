@@ -31,7 +31,7 @@ public class navegadorService {
     Image imagemPagina;
 
     public navegadorService() {
-        usuarioDAO dao = new usuarioDAO();
+//        usuarioDAO dao = new usuarioDAO();
     }
 
     public String urlDown(URL url, File file) throws IOException {

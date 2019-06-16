@@ -35,12 +35,6 @@ public class historicoDAOTest {
         h.setFavorito(true);
 
         historicoDAO dao = new historicoDAO();
-
-        if (dao.create(h)) {
-            System.out.println("Salvo com sucesso");
-        } else {
-            System.out.println("Erro ao salvar");
-        }
     }
 
     @Test
