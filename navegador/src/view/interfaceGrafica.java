@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import service.Nos;
 import service.ParseHtml;
+import service.Pilha;
 import service.Render;
 import service.navegadorService;
 import view.customized.Aba;
@@ -29,6 +30,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     navegadorService nav = new navegadorService();
     Render rend = new Render();
     Pilha pilha = new Pilha();
+//    ParseHtml p = new ParseHtml();
 
     /**
      * Creates new form interfaceGrafica
@@ -344,46 +346,24 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         ArrayList<String> imagens = new ArrayList<String>();
         String urlAcesso = jTFUrl.getText();
-
         String texto = null;
         String titulo = null;
         try {
-            //testes com arquivo local, html mais simples
-//            JFileChooser chooser = new JFileChooser();
-//            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//
-//            }
-//            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-//            String linha = "";
-//            while (br.ready()) {
-//                while (br.ready()) {
-//                    linha += br.readLine();
-//                }
-//            }
-//            br.close();
-//            br.close();
-            
-            /*  Alguns sites que renderizam rápido
-                http://po.ta.to/
-                http://www.ismycomputeron.com/
-                http://www.pudim.com.br/
-            */ 
-            URL url = new URL(jTFUrl.getText());
-            File file = new File("page.html");
-
-            texto = nav.urlDown(url, file);
-            //Imagem
-            //Parser Texto
-            ParseHtml p = new ParseHtml();
-            titulo = p.extrairTitulo(texto);
-
-            imagens = p.linkImage(texto, urlAcesso);
-            Nos arvore = p.parseArvore(texto, null);
-            rend.render(arvore, pagina);
-            rend.renderTela(pagina, imagens);
-
+//            URL url = new URL(jTFUrl.getText());
+//            File file = new File("page.html");
+//            texto = nav.urlDown(url, file);
+//            
+//            titulo = p.extrairTitulo(texto);
+//            imagens = p.linkImage(texto, urlAcesso);
+//            Nos arvore = p.parseArvore(texto, null);
+//            
+//            rend.render(arvore, pagina);
+//            rend.renderTela(pagina, imagens);
+//            
             if (!pilha.pilhaEsquerda.empty()) {
                 jBVoltar.setEnabled(true);
+            } else {
+                jBVoltar.setEnabled(false);
             }
             pilha.pilhaEsquerda.push(urlAcesso);
             if (evt.getSource().equals(jBBuscarUrl)) {
@@ -552,4 +532,23 @@ public class interfaceGrafica extends javax.swing.JFrame {
     public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 
+    //testes com arquivo local, html mais simples
+//            JFileChooser chooser = new JFileChooser();
+//            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+//
+//            }
+//            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
+//            String linha = "";
+//            while (br.ready()) {
+//                while (br.ready()) {
+//                    linha += br.readLine();
+//                }
+//            }
+//            br.close();
+//            br.close();
+    /*  Alguns sites que renderizam rápido
+                http://po.ta.to/
+                http://www.ismycomputeron.com/
+                http://www.pudim.com.br/
+     */
 }
