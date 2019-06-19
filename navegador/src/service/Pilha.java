@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view;
+package service;
 
 import java.util.Stack;
 
@@ -13,8 +13,8 @@ import java.util.Stack;
  */
 public class Pilha {
 
-    Stack<String> pilhaEsquerda = new Stack<String>();
-    Stack<String> pilhaDireita = new Stack<String>();
+    public Stack<String> pilhaEsquerda = new Stack<String>();
+    public Stack<String> pilhaDireita = new Stack<String>();
 
     public Stack<String> getPilhaDireita() {
         return pilhaDireita;
