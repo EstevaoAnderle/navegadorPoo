@@ -14,7 +14,7 @@ import view.interfaceGrafica;
  *
  * @author lenon.060194
  */
-public class ParseHtml extends interfaceGrafica {
+public class ParseHtml {
 
     ArrayList<String> imagens = new ArrayList<String>();
 
@@ -58,7 +58,6 @@ public class ParseHtml extends interfaceGrafica {
 //    public boolean malFormaçãoHtml(String parse) {
 //
 //    }
-
     public ArrayList<String> linkImage(String parse, String titulo) {
         String linkImage = null;
         Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");

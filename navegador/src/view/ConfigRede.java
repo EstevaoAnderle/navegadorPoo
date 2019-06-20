@@ -5,28 +5,28 @@
  */
 package view;
 
+import service.navegadorService;
+
 /**
  *
  * @author estevao.050597
  */
 public class ConfigRede extends javax.swing.JFrame {
-    
+
     public ConfigRede() {
         initComponents();
-        
+
         if (jRBNao.isSelected()) {
             jLIp.setEnabled(false);
             jLPorta.setEnabled(false);
             jTFIp.setEnabled(false);
             jTFPorta.setEnabled(false);
-        }else{
+        } else {
             jLIp.setEnabled(true);
             jLPorta.setEnabled(true);
             jTFIp.setEnabled(true);
             jTFPorta.setEnabled(true);
         }
-        
-        //https://www.devmedia.com.br/como-alterar-o-componente-jtextfield-para-aceitar-apenas-numeros/26152
     }
 
     /**
@@ -76,6 +76,11 @@ public class ConfigRede extends javax.swing.JFrame {
         jLPorta.setText("Porta:");
 
         jBSalvar.setText("Salvar");
+        jBSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,6 +148,17 @@ public class ConfigRede extends javax.swing.JFrame {
         jTFPorta.setEnabled(false);
     }//GEN-LAST:event_jRBNaoActionPerformed
 
+    private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
+        if (jRBNao.isSelected()) {
+            navegadorService.usaProxy = false;
+        } else {
+            navegadorService.ip = jTFIp.getText();
+            navegadorService.porta = Integer.parseInt(jTFPorta.getText());
+            System.out.println(navegadorService.porta);
+        }
+        dispose();
+    }//GEN-LAST:event_jBSalvarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -150,7 +166,7 @@ public class ConfigRede extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

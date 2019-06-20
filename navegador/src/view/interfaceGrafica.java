@@ -28,10 +28,10 @@ import view.customized.Aba;
 public class interfaceGrafica extends javax.swing.JFrame {
 
     navegadorService nav = new navegadorService();
-    Render rend = new Render();
-    Pilha pilha = new Pilha();
     ConfigRede rede = new ConfigRede();
-//    ParseHtml p = new ParseHtml();
+    Pilha pilha = new Pilha();
+    Render rend = new Render();
+    ParseHtml p = new ParseHtml();
 
     /**
      * Creates new form interfaceGrafica
@@ -340,7 +340,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
-        //conferir com o professor se pode ser dessa forma
         jPopupMenu.show(jBMenu, WIDTH - 175, jBMenu.getY() - 7);
     }//GEN-LAST:event_jBMenuActionPerformed
 
@@ -357,18 +356,16 @@ public class interfaceGrafica extends javax.swing.JFrame {
         String urlAcesso = jTFUrl.getText();
         String texto = null;
         String titulo = null;
+
         try {
-//            URL url = new URL(jTFUrl.getText());
-//            File file = new File("page.html");
-//            texto = nav.urlDown(url, file);
-//            
-//            titulo = p.extrairTitulo(texto);
-//            imagens = p.linkImage(texto, urlAcesso);
-//            Nos arvore = p.parseArvore(texto, null);
-//            
-//            rend.render(arvore, pagina);
-//            rend.renderTela(pagina, imagens);
-//            
+            File file = new File("page.html");
+            texto = nav.urlDown(jTFUrl.getText(), file);
+
+            titulo = p.extrairTitulo(texto);
+            imagens = p.linkImage(texto, urlAcesso);
+            Nos arvore = p.parseArvore(texto, null);
+            rend.render(arvore, pagina);
+            rend.renderTela(pagina, imagens);
             if (!pilha.pilhaEsquerda.empty()) {
                 jBVoltar.setEnabled(true);
             } else {
@@ -475,7 +472,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBAvancarActionPerformed
 
     private void jMIConfigRedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIConfigRedeActionPerformed
-        
         rede.setVisible(true);
     }//GEN-LAST:event_jMIConfigRedeActionPerformed
 
