@@ -29,6 +29,9 @@ import model.dao.usuarioDAO;
 public class navegadorService {
 
     Image imagemPagina;
+    public static boolean usaProxy = false;
+    public static String ip;
+    public static int porta;
 
     public navegadorService() {
 //        usuarioDAO dao = new usuarioDAO();

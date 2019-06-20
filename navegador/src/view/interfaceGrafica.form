@@ -98,6 +98,16 @@
             <Property name="toolTipText" type="java.lang.String" value="Navegar de forma privada"/>
           </Properties>
         </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="jMIConfigRede">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Configurar rede..."/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIConfigRedeActionPerformed"/>
+          </Events>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -187,9 +197,6 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Logar no navegador"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Logar no navegador"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBUserActionPerformed"/>
           </Events>
@@ -213,9 +220,6 @@
               <Dimension value="[43, 23]"/>
             </Property>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value="Adicionar nova aba"/>
-          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBNovaAbaActionPerformed"/>
           </Events>
