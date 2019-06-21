@@ -5,48 +5,54 @@
  */
 package service;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JEditorPane;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
-import view.interfaceGrafica;
+import javax.swing.JTextField;
+import view.BotaoEvento;
 
 /**
+ * Classe Render, é reponsavel em renderizar o html na pagina
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class Render {
+
     JEditorPane pa = new JEditorPane();
+    BotaoEvento bt = new BotaoEvento();
     String txt = " ";
-/**
- * 
- * @param parser Nós com as tags html populadas
- * @param pagina JEditorPane para exibição
- */
-    public void render(Nos parser, JEditorPane pagina) {
-        txt = " ";
+
+    /**
+     * Método percore os Nós ate encontrar a folha "texto"
+     *
+     * @param parser Nós com as tags html populadas
+     * @param pagina JEditorPane pagina do navegador
+     */
+    public void render(Nos parser, JEditorPane pagina, JTextField jt) {
         for (Nos item : parser.getNoChildren()) {
             if (item.texto == " ") {
-                render(item, pagina);
+                render(item, pagina, jt);
             } else {
-                renderFinal(item);
+                renderFinal(item, pagina, jt);
             }
         }
     }
-/**
- * 
- * @param parser Nós com as tags populadas
- * Metodo aplica estilo as tags e concatna a uma string
- */
-    public void renderFinal(Nos parser) {
-        
+
+    /**
+     * Método percorre a tag presente no Nó, aplicando um estilo
+     *
+     * @param parser Nós
+     */
+    public void renderFinal(Nos parser, JEditorPane pagina, JTextField j) {
+        String botao = "";
         switch (parser.nameTag) {
             case "a":
-                txt += "<br><a " + parser.atributosTag + ">" + parser.texto + "</b></font>";
-                
+                Pattern p = Pattern.compile("href=[\\'\"]?([^\\'\" >]+)");
+                Matcher m = p.matcher(parser.getAtributosTag());
+                if (m.find()) {
+                    bt.BotaoEvento(pagina, parser.atributosTag, j, m.group(1));
+                }
                 break;
             case "h1":
                 txt += "<br><font size=\"6\"><b>" + parser.texto + "</b></font>";
@@ -58,18 +64,21 @@ public class Render {
                 txt += "<br><p>" + parser.texto + "</p>";
                 break;
         }
-
     }
+
     /**
-     * 
-     * @param pagina JEditorPane para exibição
+     * Método renderiza na pagina todo texto encontrado na estrutura dos Nós
+     *
+     * @param pagina JEditorPane pagina para exibição
      * @param imagem ArrayList de imagens para ser exibida na pagina
      */
     public void renderTela(JEditorPane pagina, ArrayList imagem) {
         for (int i = 0; i < imagem.size(); i++) {
-         txt += "<img src="+imagem.get(i).toString()+">";
+            txt += "<img src=" + imagem.get(i).toString() + ">";
         }
         pagina.setContentType("text/html");
         pagina.setText(txt);
+        txt = "";
     }
+
 }

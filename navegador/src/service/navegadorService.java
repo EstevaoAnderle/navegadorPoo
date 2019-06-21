@@ -27,8 +27,9 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
+ * Classe navegadorService, responsável por baixar o conteudo do site.
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class navegadorService {
 

@@ -8,8 +8,9 @@ package model.bean;
 import java.sql.Date;
 
 /**
+ * Classe Historico contendo os atributos da mesma
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class Historico {
 
@@ -20,9 +21,15 @@ public class Historico {
     protected Usuario id_usuario;
     protected boolean favorito;
 
+    /**
+     * construtor do historico
+     */
     public Historico() {
     }
 
+    /**
+     * construtor do historico
+     */
     public Historico(String pagina, String url, Date data_acesso, Usuario id_usuario, boolean favorito) {
         this.pagina = pagina;
         this.url = url;

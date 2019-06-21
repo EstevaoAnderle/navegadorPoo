@@ -6,20 +6,22 @@
 package service;
 
 import java.util.ArrayList;
-import service.Atributos;
 
 /**
+ * Classe Nos, onde todo o html e feito o parser instanciando um novo nó
  *
- * @author lenon.060194
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class Nos {
 
     ArrayList<Nos> noChildren = new ArrayList<Nos>();
-    ArrayList<Atributos> atributos = new ArrayList<Atributos>();
     String nameTag;
     String atributosTag;
     String texto;
 
+    /**
+     * construtor da classe
+     */
     public Nos(String nameTag, String conteudoTag, String texto) {
         this.nameTag = nameTag;
         this.atributosTag = conteudoTag;
@@ -56,9 +58,5 @@ public class Nos {
 
     public void setTexto(String texto) {
         this.texto = texto;
-    }
-
-    public ArrayList<Atributos> getAtributos() {
-        return atributos;
     }
 }

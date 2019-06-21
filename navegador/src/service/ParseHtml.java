@@ -11,13 +11,22 @@ import java.util.regex.Pattern;
 import view.interfaceGrafica;
 
 /**
+ * Classe Parser, é reponsavel em verificar a estrutura hmtl passada e na
+ * criação dos nós.
  *
- * @author lenon.060194
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class ParseHtml {
 
     ArrayList<String> imagens = new ArrayList<String>();
 
+    /**
+     * Percorre a string instanciando um novo Nó
+     *
+     * @param parse string com o html
+     * @param raiz Nó principal
+     * @return método retorno um nó com todos os nós filhos presentes
+     */
     public Nos parseArvore(String parse, Nos raiz) {
         if (raiz == null) {
             raiz = new Nos("", "", "");
@@ -35,6 +44,12 @@ public class ParseHtml {
         return raiz;
     }
 
+    /**
+     * Método verifica se o nó é folha
+     *
+     * @param parse match contendo o conteudo parseado
+     * @return true se for a folha, false ao contrario disso
+     */
     public boolean detectaTexto(String parse) {
         Pattern p = Pattern.compile("^\\b\\w.*[^<>]$");
         Matcher m = p.matcher(parse);
@@ -44,7 +59,11 @@ public class ParseHtml {
             return false;
         }
     }
-
+    /**
+     * Metodo extrai o TITLE do html passado
+     * @param parse strig com o html 
+     * @return Retorna o TITLE do html
+     */
     public String extrairTitulo(String parse) {
         Pattern p = Pattern.compile("<title>(.*)<\\/title>");
         Matcher m = p.matcher(parse);
@@ -54,11 +73,13 @@ public class ParseHtml {
         }
         return titulo;
     }
-
-//    public boolean malFormaçãoHtml(String parse) {
-//
-//    }
-    public ArrayList<String> linkImage(String parse, String titulo) {
+    /**
+     * Método extrai todas a imagens presente no hmtl
+     * @param parse strig com o html
+     * @param url url de acesso para se preciso, definir caminho do servidor
+     * @return Retorna um array contendo as imagens do html
+     */
+    public ArrayList<String> linkImage(String parse, String url) {
         String linkImage = null;
         Pattern p = Pattern.compile("<img\\s+[^>]*src=\"([^\"]*)\"[^>]*>");
         Matcher m = p.matcher(parse);
@@ -68,9 +89,24 @@ public class ParseHtml {
             if (m2.find()) {
                 imagens.add(m.group(1));
             } else {
-                imagens.add(titulo + m.group(1));
+                imagens.add(url + m.group(1));
             }
         }
         return imagens;
+    }
+    /**
+     * Método responsavél para verificar má formação no html
+     * @param html strig com o html
+     * @return Retorna true caso mal formatado, false ao contrario disso.
+     */
+    public boolean isBadlyFormatted(String html) {
+
+        Pattern p = Pattern.compile("<(\\w*\\s?<)|>(\\w*\\s?>)");
+        Matcher m = p.matcher(html);
+        if (m.find()) {
+            System.out.println(m.group(0));
+            return true;
+        }
+        return false;
     }
 }

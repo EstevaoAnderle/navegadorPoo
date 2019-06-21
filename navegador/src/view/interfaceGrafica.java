@@ -5,14 +5,24 @@
  */
 package view;
 
+import java.awt.HeadlessException;
 import view.customized.ButtonTabComponent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import service.Nos;
 import service.ParseHtml;
@@ -46,6 +56,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         }
         //Isso faz com que ele sempre inicie centralizado
         this.setLocationRelativeTo(null);
+    }
+
+    public interfaceGrafica(String url) throws HeadlessException {
+
     }
 
     /**
@@ -364,7 +378,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
             titulo = p.extrairTitulo(texto);
             imagens = p.linkImage(texto, urlAcesso);
             Nos arvore = p.parseArvore(texto, null);
-            rend.render(arvore, pagina);
+            rend.render(arvore, pagina, jTFUrl);
             rend.renderTela(pagina, imagens);
             if (!pilha.pilhaEsquerda.empty()) {
                 jBVoltar.setEnabled(true);
@@ -512,7 +526,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAvancar;
-    private javax.swing.JButton jBBuscarUrl;
+    protected javax.swing.JButton jBBuscarUrl;
     private javax.swing.JButton jBMenu;
     private javax.swing.JButton jBNovaAba;
     private javax.swing.JButton jBUser;
@@ -532,7 +546,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPanel jPAba1;
     private javax.swing.JPanel jPAcoes;
     private javax.swing.JPanel jPNavegacao;
-    private javax.swing.JPanel jPUrl;
+    public javax.swing.JPanel jPUrl;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JScrollPane jSPPagina;
     private javax.swing.JPopupMenu.Separator jSeparador1;
