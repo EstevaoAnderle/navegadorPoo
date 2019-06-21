@@ -13,7 +13,8 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula Classe contém configurações da
+ * conexão
  */
 public class connectionFactory {
 
@@ -22,6 +23,9 @@ public class connectionFactory {
     private static final String USER = "root";
     private static final String PASS = "";
 
+    /**
+     * Inicia a conexão
+     */
     public static Connection getConnection() {
         try {
             Class.forName(DRIVER);
@@ -31,6 +35,9 @@ public class connectionFactory {
         }
     }
 
+    /**
+     * Fecha a conexão
+     */
     public static void closeConnection(Connection con) {
         if (con != null) {
             try {
@@ -41,6 +48,9 @@ public class connectionFactory {
         }
     }
 
+    /**
+     * Fecha a conexão
+     */
     public static void closeConnection(Connection con, PreparedStatement stmt) {
 
         closeConnection(con);
@@ -54,6 +64,9 @@ public class connectionFactory {
         }
     }
 
+    /**
+     * Fecha a conexão
+     */
     public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
 
         closeConnection(con, stmt);

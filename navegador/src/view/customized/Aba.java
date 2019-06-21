@@ -185,7 +185,7 @@ public class Aba extends JPanel {
             ParseHtml p = new ParseHtml();
             imagens = p.linkImage(texto, titulo);
             Nos arvore = p.parseArvore(texto, null);
-            rend.render(arvore, pagina);
+//            rend.render(arvore, pagina);
             rend.renderTela(pagina, imagens);
         } catch (Exception e) {
         }

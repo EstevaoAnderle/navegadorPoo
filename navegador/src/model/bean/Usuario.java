@@ -6,8 +6,9 @@
 package model.bean;
 
 /**
+ * Classe Usuario contendo os atributos da mesma
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class Usuario {
 
@@ -15,6 +16,22 @@ public class Usuario {
     protected String nome;
     protected String login;
     protected String senha;
+
+    /**
+     * construtor do historico
+     */
+    public Usuario() {
+    }
+
+    /**
+     * construtor do historico
+     */
+    public Usuario(int id, String nome, String login, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.login = login;
+        this.senha = senha;
+    }
 
     public int getId() {
         return id;
