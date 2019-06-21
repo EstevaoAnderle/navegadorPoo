@@ -28,9 +28,10 @@ import view.customized.Aba;
 public class interfaceGrafica extends javax.swing.JFrame {
 
     navegadorService nav = new navegadorService();
-    Render rend = new Render();
+    ConfigRede rede = new ConfigRede();
     Pilha pilha = new Pilha();
-//    ParseHtml p = new ParseHtml();
+    Render rend = new Render();
+    ParseHtml p = new ParseHtml();
 
     /**
      * Creates new form interfaceGrafica
@@ -71,6 +72,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIExibirFavoritos = new javax.swing.JMenuItem();
         jSeparador1 = new javax.swing.JPopupMenu.Separator();
         jMIModoPrivado = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMIConfigRede = new javax.swing.JMenuItem();
         jPAcoes = new javax.swing.JPanel();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
@@ -143,6 +146,15 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIModoPrivado.setText("Modo privativo");
         jMIModoPrivado.setToolTipText("Navegar de forma privada");
         jPopupMenu.add(jMIModoPrivado);
+        jPopupMenu.add(jSeparator1);
+
+        jMIConfigRede.setText("Configurar rede...");
+        jMIConfigRede.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIConfigRedeActionPerformed(evt);
+            }
+        });
+        jPopupMenu.add(jMIConfigRede);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Navegador");
@@ -197,9 +209,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
                     .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
-
-        jBUser.getAccessibleContext().setAccessibleDescription("Logar no navegador");
-        jBNovaAba.getAccessibleContext().setAccessibleDescription("Adicionar nova aba");
 
         jTPAbas.setToolTipText("");
         jTPAbas.setPreferredSize(new java.awt.Dimension(23, 100));
@@ -331,7 +340,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
-        //conferir com o professor se pode ser dessa forma
         jPopupMenu.show(jBMenu, WIDTH - 175, jBMenu.getY() - 7);
     }//GEN-LAST:event_jBMenuActionPerformed
 
@@ -348,18 +356,16 @@ public class interfaceGrafica extends javax.swing.JFrame {
         String urlAcesso = jTFUrl.getText();
         String texto = null;
         String titulo = null;
+
         try {
-//            URL url = new URL(jTFUrl.getText());
-//            File file = new File("page.html");
-//            texto = nav.urlDown(url, file);
-//            
-//            titulo = p.extrairTitulo(texto);
-//            imagens = p.linkImage(texto, urlAcesso);
-//            Nos arvore = p.parseArvore(texto, null);
-//            
-//            rend.render(arvore, pagina);
-//            rend.renderTela(pagina, imagens);
-//            
+            File file = new File("page.html");
+            texto = nav.urlDown(jTFUrl.getText(), file);
+
+            titulo = p.extrairTitulo(texto);
+            imagens = p.linkImage(texto, urlAcesso);
+            Nos arvore = p.parseArvore(texto, null);
+            rend.render(arvore, pagina);
+            rend.renderTela(pagina, imagens);
             if (!pilha.pilhaEsquerda.empty()) {
                 jBVoltar.setEnabled(true);
             } else {
@@ -465,6 +471,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBAvancarActionPerformed
 
+    private void jMIConfigRedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIConfigRedeActionPerformed
+        rede.setVisible(true);
+    }//GEN-LAST:event_jMIConfigRedeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -509,6 +519,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JButton jBVoltar;
     private javax.swing.JMenu jMFavoritos;
     private javax.swing.JMenuItem jMIAddFavorito;
+    private javax.swing.JMenuItem jMIConfigRede;
     private javax.swing.JMenuItem jMIExibirFavoritos;
     private javax.swing.JMenuItem jMIFav1;
     private javax.swing.JMenuItem jMIFav2;
@@ -527,6 +538,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
     private javax.swing.JPopupMenu.Separator jSeparador3;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
     public javax.swing.JEditorPane pagina;
