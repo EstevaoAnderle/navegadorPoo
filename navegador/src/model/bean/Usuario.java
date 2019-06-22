@@ -12,7 +12,7 @@ package model.bean;
  */
 public class Usuario {
 
-    protected int id;
+    protected int id = 1;
     protected String nome;
     protected String login;
     protected String senha;

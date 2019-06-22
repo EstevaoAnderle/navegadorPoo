@@ -11,7 +11,12 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -24,6 +29,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import model.bean.Historico;
+import model.bean.Usuario;
+import model.dao.historicoDAO;
 import service.Nos;
 import service.ParseHtml;
 import service.Pilha;
@@ -42,6 +50,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
     Pilha pilha = new Pilha();
     Render rend = new Render();
     ParseHtml p = new ParseHtml();
+    TelaLogin login = new TelaLogin();
+    Historico historico = new Historico();
+    historicoDAO hDAO = new historicoDAO();
+    Usuario usuario = new Usuario();
 
     /**
      * Creates new form interfaceGrafica
@@ -358,8 +370,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-        //Historico h = new Historico();
-        //historicoDAO hDAO = new historicoDAO();
         //adicionar tratamento para pegar o Title
         //h.setPagina(pagina);
         //h.setUrl(jTFUrl.getText());
@@ -393,6 +403,14 @@ public class interfaceGrafica extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
+        historico.setPagina(titulo);
+        historico.setUrl(urlAcesso);
+        Timestamp data = new Timestamp(System.currentTimeMillis());
+        System.out.println(data);
+        historico.setData_acesso(data);
+        historico.setId_usuario(usuario.getId());
+        historico.setFavorito(false);
+        hDAO.create(historico);
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
     private void jMIHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHistoricoActionPerformed
@@ -457,7 +475,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jTPAbasComponentRemoved
 
     private void jBUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUserActionPerformed
-        TelaLogin login = new TelaLogin();
         login.setVisible(true);
     }//GEN-LAST:event_jBUserActionPerformed
 

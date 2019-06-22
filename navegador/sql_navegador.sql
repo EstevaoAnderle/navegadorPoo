@@ -3,7 +3,7 @@ USE navegador;
 
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
 
-SET GLOBAL time_zone = '+4:00';
+SET GLOBAL time_zone = '-3:00';
 
 CREATE TABLE usuario (
 	PRIMARY KEY(id),
@@ -25,7 +25,10 @@ CREATE TABLE historico (
     data_acesso DATETIME,
     id_usuario INT NOT NULL,
 		FOREIGN KEY (id_usuario) REFERENCES usuario(id),
-    favorito BOOLEAN NOT NULL,
+    favorito BOOLEAN,
 	UNIQUE KEY favorito_usuario(url, id_usuario)
-); 
-    
+);
+
+drop table historico;
+
+select * from historico;

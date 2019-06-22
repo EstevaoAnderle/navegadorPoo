@@ -21,6 +21,8 @@ import model.bean.Usuario;
  */
 public class historicoDAO {
 
+    Usuario usuario = new Usuario();
+
     public boolean create(Historico his) {
 
         Connection con = connectionFactory.getConnection();
@@ -30,8 +32,8 @@ public class historicoDAO {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, his.getPagina());
             stmt.setString(2, his.getUrl());
-            stmt.setDate(3, his.getData_acesso());
-            stmt.setInt(4, his.getId_usuario().getId());
+            stmt.setObject(3, his.getData_acesso());
+            stmt.setInt(4, his.getId_usuario());
             stmt.setBoolean(5, his.isFavorito());
 
             stmt.executeUpdate();
@@ -61,11 +63,8 @@ public class historicoDAO {
                 hist.setId(rs.getInt("id"));
                 hist.setPagina(rs.getString("pagina"));
                 hist.setUrl(rs.getString("url"));
-                hist.setData_acesso(rs.getDate("data_acesso"));
-
-                Usuario user = new Usuario();
-                user.setId(rs.getInt("id_usuario"));
-                hist.setId_usuario(user);
+                hist.setData_acesso(rs.getTimestamp("data_acesso"));
+                hist.setId_usuario(usuario.getId());
                 hist.setFavorito(rs.getBoolean("favorito"));
                 his.add(hist);
             }

@@ -17,6 +17,8 @@ import model.bean.Usuario;
 public class usuarioDAO {
 
     Connection con = connectionFactory.getConnection();
+    private String nomeUsuario;
+    Usuario usuario = new Usuario();
 
     //Esse cara seria utilizado se caso a gente criasse um usuário
 //    public boolean save(Usuario usuario) {
@@ -43,6 +45,7 @@ public class usuarioDAO {
 
         try {
             stmt = con.prepareStatement(sql);
+
             stmt.setString(1, login);
             stmt.setString(2, senha);
             rs = stmt.executeQuery();
@@ -56,6 +59,8 @@ public class usuarioDAO {
 //            }
             if (rs.next()) {
                 check = true;
+                nomeUsuario = rs.getString("nome");
+                usuario.setId(rs.getInt("id"));
             }
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
@@ -65,4 +70,7 @@ public class usuarioDAO {
         return check;
     }
 
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
 }
