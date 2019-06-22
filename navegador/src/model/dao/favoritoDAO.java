@@ -10,33 +10,38 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
-import model.bean.Historico;
+import javax.swing.JOptionPane;
+import model.bean.Favorito;
 import model.bean.Usuario;
 
 /**
  *
- * @author Lenon
+ * @author estev
  */
-public class historicoDAO {
+public class favoritoDAO {
 
     Usuario usuario = new Usuario();
 
-    public boolean create(Historico his) {
+    public boolean create(Favorito fav) {
 
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = "INSERT INTO historico (pagina, url, data_acesso, id_usuario) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO favorito (nome, url, data_armazenamento, id_usuario) VALUES (?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
-            stmt.setString(1, his.getPagina());
-            stmt.setString(2, his.getUrl());
-            stmt.setObject(3, his.getData_acesso());
-            stmt.setInt(4, his.getId_usuario());
+            stmt.setString(1, fav.getNome());
+            stmt.setString(2, fav.getUrl());
+            stmt.setObject(3, fav.getData_armazenamento());
+            stmt.setInt(4, fav.getId_usuario());
 
             stmt.executeUpdate();
             return true;
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            JOptionPane.showMessageDialog(null, "Essa página já está salva como favorito.");
+            return false;
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
             return false;
@@ -45,24 +50,54 @@ public class historicoDAO {
         }
     }
 
-    public List<Historico> getAll() {
+    public List<Favorito> getAll() {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Historico> his = new ArrayList<>();
+        List<Favorito> fav = new ArrayList<>();
 
         try {
-            String sql = "SELECT h.data_acesso, h.pagina, h.url FROM historico AS h WHERE h.id_usuario = ?";
+            String sql = "SELECT f.data_armazenamento, f.nome, F.url FROM favorito AS f "
+                    + "WHERE f.id_usuario = ?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, usuario.getId());
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Historico hist = new Historico();
-                hist.setData_acesso(rs.getTimestamp("data_acesso"));
-                hist.setPagina(rs.getString("pagina"));
-                hist.setUrl(rs.getString("url"));
-                his.add(hist);
+                Favorito favi = new Favorito();
+                favi.setData_armazenamento(rs.getTimestamp("data_armazenamento"));
+                favi.setNome(rs.getString("nome"));
+                favi.setUrl(rs.getString("url"));
+                fav.add(favi);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro " + ex);
+        } finally {
+            connectionFactory.closeConnection(con, stmt, rs);
+        }
+        return fav;
+    }
+
+    public List<Favorito> getForNome(String nome) {
+        Connection con = connectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Favorito> his = new ArrayList<>();
+
+        try {
+            String sql = "SELECT f.data_armazenamento, f.nome, f.url FROM favorito AS f "
+                    + "WHERE f.id_usuario = ? AND f.nome LIKE ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, usuario.getId());
+            stmt.setString(2, "%" + nome + "%");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Favorito favi = new Favorito();
+                favi.setData_armazenamento(rs.getTimestamp("data_armazenamento"));
+                favi.setNome(rs.getString("nome"));
+                favi.setUrl(rs.getString("url"));
+                his.add(favi);
             }
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
@@ -72,62 +107,33 @@ public class historicoDAO {
         return his;
     }
 
-    public List<Historico> getForUrl(String pagina) {
+    public List<Favorito> getForDate(String data) {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Historico> his = new ArrayList<>();
+        List<Favorito> fav = new ArrayList<>();
 
         try {
-            String sql = "SELECT h.data_acesso, h.pagina, h.url FROM historico AS h "
-                    + "WHERE h.id_usuario = ? AND h.pagina LIKE ?";
-            stmt = con.prepareStatement(sql);
-            stmt.setInt(1, usuario.getId());
-            stmt.setString(2, "%" + pagina + "%");
-            rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Historico hist = new Historico();
-                hist.setData_acesso(rs.getTimestamp("data_acesso"));
-                hist.setPagina(rs.getString("pagina"));
-                hist.setUrl(rs.getString("url"));
-                his.add(hist);
-            }
-        } catch (SQLException ex) {
-            System.err.println("Erro " + ex);
-        } finally {
-            connectionFactory.closeConnection(con, stmt, rs);
-        }
-        return his;
-    }
-
-    public List<Historico> getForDate(String data) {
-        Connection con = connectionFactory.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<Historico> his = new ArrayList<>();
-
-        try {
-            String sql = "SELECT h.data_acesso, h.pagina, h.url FROM historico AS h "
-                    + "WHERE h.id_usuario = ? AND h.data_acesso LIKE ?";
+            String sql = "SELECT f.data_armazenamento, f.nome, f.url FROM favorito AS f "
+                    + "WHERE f.id_usuario = ? AND f.data_armazenamento LIKE ?";
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, usuario.getId());
             stmt.setString(2, "%" + data + "%");
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Historico hist = new Historico();
-                hist.setData_acesso(rs.getTimestamp("data_acesso"));
-                hist.setPagina(rs.getString("pagina"));
-                hist.setUrl(rs.getString("url"));
-                his.add(hist);
+                Favorito favi = new Favorito();
+                favi.setData_armazenamento(rs.getTimestamp("data_armazenamento"));
+                favi.setNome(rs.getString("nome"));
+                favi.setUrl(rs.getString("url"));
+                fav.add(favi);
             }
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
         } finally {
             connectionFactory.closeConnection(con, stmt, rs);
         }
-        return his;
+        return fav;
     }
 
 }

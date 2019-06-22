@@ -65,7 +65,7 @@ public class usuarioDAO {
         } catch (SQLException ex) {
             System.err.println("Erro " + ex);
         } finally {
-            connectionFactory.closeConnection(con, stmt);
+            connectionFactory.closeConnection(con, stmt, rs);
         }
         return check;
     }

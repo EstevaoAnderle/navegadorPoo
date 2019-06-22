@@ -41,6 +41,7 @@ public class navegadorService {
 
     public navegadorService() {
         Usuario usuario = new Usuario();
+        usuario.setId(1);
     }
 
     public String urlDown(String address, File file) {

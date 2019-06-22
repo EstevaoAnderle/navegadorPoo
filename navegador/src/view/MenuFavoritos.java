@@ -6,6 +6,9 @@
 package view;
 
 import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Favorito;
+import model.dao.favoritoDAO;
 
 /**
  *
@@ -20,6 +23,51 @@ public class MenuFavoritos extends javax.swing.JFrame {
         initComponents();
         //Isso faz com que ele sempre inicie centralizado
         this.setLocationRelativeTo(null);
+        DefaultTableModel dtmFavorito = (DefaultTableModel) jTFavorito.getModel();
+        getAllFavorito();
+    }
+
+    public void getAllFavorito() {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
+        dtmHistorico.setNumRows(0);
+        favoritoDAO fDAO = new favoritoDAO();
+
+        for (Favorito f : fDAO.getAll()) {
+            dtmHistorico.addRow(new Object[]{
+                f.getData_armazenamento(),
+                f.getNome(),
+                f.getUrl()
+            });
+
+        }
+    }
+
+    public void getAllFavoritoNome(String nome) {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
+        dtmHistorico.setNumRows(0);
+        favoritoDAO fDAO = new favoritoDAO();
+
+        for (Favorito f : fDAO.getForNome(nome)) {
+            dtmHistorico.addRow(new Object[]{
+                f.getData_armazenamento(),
+                f.getNome(),
+                f.getUrl()
+            });
+        }
+    }
+
+    public void getAllFavoritoData(String data) {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
+        dtmHistorico.setNumRows(0);
+        favoritoDAO fDAO = new favoritoDAO();
+
+        for (Favorito f : fDAO.getForDate(data)) {
+            dtmHistorico.addRow(new Object[]{
+                f.getData_armazenamento(),
+                f.getNome(),
+                f.getUrl()
+            });
+        }
     }
 
     /**
@@ -34,14 +82,15 @@ public class MenuFavoritos extends javax.swing.JFrame {
         jCBFiltro = new javax.swing.JComboBox<>();
         jTFPesquisarFavorito = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTHistorico = new javax.swing.JTable();
+        jTFavorito = new javax.swing.JTable();
         jBCancelar = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Favoritos");
         setResizable(false);
 
-        jCBFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Página:", "Adicionado em:" }));
+        jCBFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nome:", "Adicionado em:" }));
         jCBFiltro.setToolTipText("Filtrar por:");
 
         jTFPesquisarFavorito.setForeground(new java.awt.Color(153, 153, 153));
@@ -52,32 +101,10 @@ public class MenuFavoritos extends javax.swing.JFrame {
             }
         });
 
-        jTHistorico.setAutoCreateRowSorter(true);
-        jTHistorico.setModel(new javax.swing.table.DefaultTableModel(
+        jTFavorito.setAutoCreateRowSorter(true);
+        jTFavorito.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Salvo em:", "Página:", "Endereço:"
@@ -98,14 +125,23 @@ public class MenuFavoritos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTHistorico.setRowSelectionAllowed(false);
-        jScrollPane1.setViewportView(jTHistorico);
+        jTFavorito.setColumnSelectionAllowed(true);
+        jTFavorito.setRowSelectionAllowed(false);
+        jScrollPane1.setViewportView(jTFavorito);
+        jTFavorito.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jBCancelar.setText("Fechar");
         jBCancelar.setToolTipText("Fechar favoritos");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
+            }
+        });
+
+        jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
             }
         });
 
@@ -116,11 +152,13 @@ public class MenuFavoritos extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFPesquisarFavorito))
+                        .addComponent(jTFPesquisarFavorito)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBBuscar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBCancelar)))
@@ -132,7 +170,8 @@ public class MenuFavoritos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFPesquisarFavorito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFPesquisarFavorito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,6 +193,14 @@ public class MenuFavoritos extends javax.swing.JFrame {
         //Ao clicar no botão, ele dispara esse evento e fecha a janela.
         dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        if (String.valueOf(jCBFiltro.getSelectedItem()).equals("Nome:")) {
+            getAllFavoritoNome(jTFPesquisarFavorito.getText());
+        } else {
+            getAllFavoritoData(jTFPesquisarFavorito.getText());
+        }
+    }//GEN-LAST:event_jBBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,10 +245,11 @@ public class MenuFavoritos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JComboBox<String> jCBFiltro;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFPesquisarFavorito;
-    private javax.swing.JTable jTHistorico;
+    private javax.swing.JTable jTFavorito;
     // End of variables declaration//GEN-END:variables
 }

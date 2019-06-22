@@ -22,7 +22,6 @@ public class Historico {
     protected String url;
     protected Timestamp data_acesso;
     protected int id_usuario;
-    protected boolean favorito;
 
     /**
      * construtor do historico
@@ -33,12 +32,11 @@ public class Historico {
     /**
      * construtor do historico
      */
-    public Historico(String pagina, String url, Timestamp data_acesso, int id_usuario, boolean favorito) {
+    public Historico(String pagina, String url, Timestamp data_acesso, int id_usuario) {
         this.pagina = pagina;
         this.url = url;
         this.data_acesso = data_acesso;
         this.id_usuario = id_usuario;
-        this.favorito = favorito;
     }
 
     public int getId() {
@@ -80,13 +78,4 @@ public class Historico {
     public void setId_usuario(int getIDUsuario) {
         this.id_usuario = getIDUsuario;
     }
-
-    public boolean isFavorito() {
-        return favorito;
-    }
-
-    public void setFavorito(boolean favorito) {
-        this.favorito = favorito;
-    }
-
 }
