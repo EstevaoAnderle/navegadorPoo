@@ -6,6 +6,9 @@
 package model.bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 /**
  * Classe Historico contendo os atributos da mesma
@@ -17,9 +20,8 @@ public class Historico {
     protected int id;
     protected String pagina;
     protected String url;
-    protected Date data_acesso;
-    protected Usuario id_usuario;
-    protected boolean favorito;
+    protected Timestamp data_acesso;
+    protected int id_usuario;
 
     /**
      * construtor do historico
@@ -30,12 +32,11 @@ public class Historico {
     /**
      * construtor do historico
      */
-    public Historico(String pagina, String url, Date data_acesso, Usuario id_usuario, boolean favorito) {
+    public Historico(String pagina, String url, Timestamp data_acesso, int id_usuario) {
         this.pagina = pagina;
         this.url = url;
         this.data_acesso = data_acesso;
         this.id_usuario = id_usuario;
-        this.favorito = favorito;
     }
 
     public int getId() {
@@ -62,28 +63,19 @@ public class Historico {
         this.url = url;
     }
 
-    public Date getData_acesso() {
+    public Timestamp getData_acesso() {
         return data_acesso;
     }
 
-    public void setData_acesso(Date data_acesso) {
+    public void setData_acesso(Timestamp data_acesso) {
         this.data_acesso = data_acesso;
     }
 
-    public Usuario getId_usuario() {
+    public int getId_usuario() {
         return id_usuario;
     }
 
-    public void setId_usuario(Usuario id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setId_usuario(int getIDUsuario) {
+        this.id_usuario = getIDUsuario;
     }
-
-    public boolean isFavorito() {
-        return favorito;
-    }
-
-    public void setFavorito(boolean favorito) {
-        this.favorito = favorito;
-    }
-
 }

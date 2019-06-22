@@ -37,41 +37,11 @@
                 <Property name="text" type="java.lang.String" value="Adicionar p&#xe1;gina aos favoritos"/>
                 <Property name="toolTipText" type="java.lang.String" value="Salvar p&#xe1;gina como favorito"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMIAddFavoritoActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparador2">
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFavRecentes">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Favoritos recentes"/>
-                <Property name="enabled" type="boolean" value="false"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFav1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFav2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFav3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFav4">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMIFav5">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="&lt;Vazio&gt;"/>
-              </Properties>
-            </MenuItem>
-            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparador3">
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMIExibirFavoritos">
               <Properties>
@@ -365,6 +335,9 @@
                   </Layout>
                   <SubComponents>
                     <Component class="javax.swing.JTextField" name="jTFUrl">
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFUrlKeyPressed"/>
+                      </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
                       </AuxValues>

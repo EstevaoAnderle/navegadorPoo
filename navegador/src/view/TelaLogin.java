@@ -57,6 +57,7 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         jLInfo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLInfo.setText("Usuário padrão");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,8 +112,18 @@ public class TelaLogin extends javax.swing.JFrame {
     private void jBLogarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLogarActionPerformed
         usuarioDAO dao = new usuarioDAO();
 
-        if (dao.checkLogin(jTFLogin.getText(), jTFSenha.getText())) {
-            System.out.println("Login realizado");
+        if (jTFLogin.getText().equals("") && jTFSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe seu login e senha.");
+            jTFLogin.requestFocus();
+        } else if (jTFLogin.getText().equals("") && !jTFSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe seu login.");
+            jTFLogin.requestFocus();
+        } else if (!jTFLogin.getText().equals("") && jTFSenha.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe sua senha.");
+            jTFSenha.requestFocus();
+        } else if (dao.checkLogin(jTFLogin.getText(), jTFSenha.getText())) {
+            JOptionPane.showMessageDialog(null, "Bem vindo, " + dao.getNomeUsuario() + "!");
+            jLInfo.setText(dao.getNomeUsuario());
         } else {
             JOptionPane.showMessageDialog(null, "Falha no login, verifique!");
         }

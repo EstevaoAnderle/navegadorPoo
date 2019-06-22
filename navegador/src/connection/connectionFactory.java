@@ -19,9 +19,10 @@ import java.sql.SQLException;
 public class connectionFactory {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/navegador?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/navegador?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=America/Sao_Paulo";
+    //private static final String URL = "jdbc:mysql://localhost:3306/navegador";
     private static final String USER = "root";
-    private static final String PASS = "";
+    private static final String PASS = "root";
 
     /**
      * Inicia a conexão

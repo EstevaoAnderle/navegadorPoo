@@ -12,7 +12,7 @@ package model.bean;
  */
 public class Usuario {
 
-    protected int id;
+    protected static int id;
     protected String nome;
     protected String login;
     protected String senha;
@@ -21,6 +21,7 @@ public class Usuario {
      * construtor do historico
      */
     public Usuario() {
+
     }
 
     /**

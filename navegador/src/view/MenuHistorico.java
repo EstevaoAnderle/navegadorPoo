@@ -6,6 +6,11 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Historico;
+import model.dao.historicoDAO;
 
 /**
  *
@@ -20,6 +25,51 @@ public class MenuHistorico extends javax.swing.JFrame {
         initComponents();
         //Isso faz com que ele sempre inicie centralizado
         this.setLocationRelativeTo(null);
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
+        getAllHistorico();
+    }
+
+    public void getAllHistorico() {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
+        dtmHistorico.setNumRows(0);
+        historicoDAO hDAO = new historicoDAO();
+
+        for (Historico h : hDAO.getAll()) {
+            dtmHistorico.addRow(new Object[]{
+                h.getData_acesso(),
+                h.getPagina(),
+                h.getUrl()
+            });
+
+        }
+    }
+
+    public void getAllHistoricoUrl(String pagina) {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
+        dtmHistorico.setNumRows(0);
+        historicoDAO hDAO = new historicoDAO();
+
+        for (Historico h : hDAO.getForUrl(pagina)) {
+            dtmHistorico.addRow(new Object[]{
+                h.getData_acesso(),
+                h.getPagina(),
+                h.getUrl()
+            });
+        }
+    }
+
+    public void getAllHistoricoData(String data) {
+        DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
+        dtmHistorico.setNumRows(0);
+        historicoDAO hDAO = new historicoDAO();
+
+        for (Historico h : hDAO.getForDate(data)) {
+            dtmHistorico.addRow(new Object[]{
+                h.getData_acesso(),
+                h.getPagina(),
+                h.getUrl()
+            });
+        }
     }
 
     /**
@@ -36,6 +86,7 @@ public class MenuHistorico extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTHistorico = new javax.swing.JTable();
         jBCancelar = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Histórico");
@@ -55,29 +106,7 @@ public class MenuHistorico extends javax.swing.JFrame {
         jTHistorico.setAutoCreateRowSorter(true);
         jTHistorico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "Acessado em:", "Página:", "Endereço:"
@@ -98,14 +127,23 @@ public class MenuHistorico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTHistorico.setColumnSelectionAllowed(true);
         jTHistorico.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(jTHistorico);
+        jTHistorico.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         jBCancelar.setText("Fechar");
         jBCancelar.setToolTipText("Fechar histórico");
         jBCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBCancelarActionPerformed(evt);
+            }
+        });
+
+        jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
             }
         });
 
@@ -116,11 +154,14 @@ public class MenuHistorico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFPesquisarHistorico))
+                        .addComponent(jTFPesquisarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBBuscar)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBCancelar)))
@@ -132,7 +173,8 @@ public class MenuHistorico extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCBFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFPesquisarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFPesquisarHistorico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,6 +196,15 @@ public class MenuHistorico extends javax.swing.JFrame {
         //Ao clicar no botão, ele dispara esse evento e fecha a janela.
         dispose();
     }//GEN-LAST:event_jBCancelarActionPerformed
+
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        if (String.valueOf(jCBFiltro.getSelectedItem()).equals("Página:")) {
+            getAllHistoricoUrl(jTFPesquisarHistorico.getText());
+        } else {
+            getAllHistoricoData(jTFPesquisarHistorico.getText());
+        }
+
+    }//GEN-LAST:event_jBBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,6 +243,7 @@ public class MenuHistorico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jBCancelar;
     private javax.swing.JComboBox<String> jCBFiltro;
     private javax.swing.JScrollPane jScrollPane1;

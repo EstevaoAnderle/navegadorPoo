@@ -25,6 +25,7 @@ import java.net.UnknownServiceException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import model.bean.Usuario;
 
 /**
  * Classe navegadorService, responsável por baixar o conteudo do site.
@@ -39,7 +40,8 @@ public class navegadorService {
     public static int porta;
 
     public navegadorService() {
-//        usuarioDAO dao = new usuarioDAO();
+        Usuario usuario = new Usuario();
+        usuario.setId(1);
     }
 
     public String urlDown(String address, File file) {

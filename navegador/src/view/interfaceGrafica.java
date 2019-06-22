@@ -5,13 +5,19 @@
  */
 package view;
 
+import java.awt.Event;
 import java.awt.HeadlessException;
 import view.customized.ButtonTabComponent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFileChooser;
@@ -24,6 +30,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import model.bean.Favorito;
+import model.bean.Historico;
+import model.bean.Usuario;
+import model.dao.favoritoDAO;
+import model.dao.historicoDAO;
 import service.Nos;
 import service.ParseHtml;
 import service.Pilha;
@@ -42,6 +53,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
     Pilha pilha = new Pilha();
     Render rend = new Render();
     ParseHtml p = new ParseHtml();
+    TelaLogin login = new TelaLogin();
+    Historico historico = new Historico();
+    historicoDAO hDAO = new historicoDAO();
+    Favorito favorito = new Favorito();
+    favoritoDAO fDAO = new favoritoDAO();
+    Usuario usuario = new Usuario();
 
     /**
      * Creates new form interfaceGrafica
@@ -76,13 +93,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMFavoritos = new javax.swing.JMenu();
         jMIAddFavorito = new javax.swing.JMenuItem();
         jSeparador2 = new javax.swing.JPopupMenu.Separator();
-        jMIFavRecentes = new javax.swing.JMenuItem();
-        jMIFav1 = new javax.swing.JMenuItem();
-        jMIFav2 = new javax.swing.JMenuItem();
-        jMIFav3 = new javax.swing.JMenuItem();
-        jMIFav4 = new javax.swing.JMenuItem();
-        jMIFav5 = new javax.swing.JMenuItem();
-        jSeparador3 = new javax.swing.JPopupMenu.Separator();
         jMIExibirFavoritos = new javax.swing.JMenuItem();
         jSeparador1 = new javax.swing.JPopupMenu.Separator();
         jMIModoPrivado = new javax.swing.JMenuItem();
@@ -120,28 +130,13 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jMIAddFavorito.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
         jMIAddFavorito.setText("Adicionar página aos favoritos");
         jMIAddFavorito.setToolTipText("Salvar página como favorito");
+        jMIAddFavorito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMIAddFavoritoActionPerformed(evt);
+            }
+        });
         jMFavoritos.add(jMIAddFavorito);
         jMFavoritos.add(jSeparador2);
-
-        jMIFavRecentes.setText("Favoritos recentes");
-        jMIFavRecentes.setEnabled(false);
-        jMFavoritos.add(jMIFavRecentes);
-
-        jMIFav1.setText("<Vazio>");
-        jMFavoritos.add(jMIFav1);
-
-        jMIFav2.setText("<Vazio>");
-        jMFavoritos.add(jMIFav2);
-
-        jMIFav3.setText("<Vazio>");
-        jMFavoritos.add(jMIFav3);
-
-        jMIFav4.setText("<Vazio>");
-        jMFavoritos.add(jMIFav4);
-
-        jMIFav5.setText("<Vazio>");
-        jMFavoritos.add(jMIFav5);
-        jMFavoritos.add(jSeparador3);
 
         jMIExibirFavoritos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMIExibirFavoritos.setText("Mostrar favoritos");
@@ -252,6 +247,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
         jPUrl.setBackground(new java.awt.Color(255, 255, 255));
 
+        jTFUrl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFUrlKeyPressed(evt);
+            }
+        });
+
         jBBuscarUrl.setBackground(new java.awt.Color(255, 255, 255));
         jBBuscarUrl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/busca_url.png"))); // NOI18N
         jBBuscarUrl.setToolTipText("Ir para endereço digitado");
@@ -358,8 +359,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBMenuActionPerformed
 
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-        //Historico h = new Historico();
-        //historicoDAO hDAO = new historicoDAO();
         //adicionar tratamento para pegar o Title
         //h.setPagina(pagina);
         //h.setUrl(jTFUrl.getText());
@@ -393,6 +392,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
         } catch (Exception e) {
         }
 
+        historico.setPagina(titulo);
+        historico.setUrl(urlAcesso);
+        Timestamp data = new Timestamp(System.currentTimeMillis());
+        historico.setData_acesso(data);
+        historico.setId_usuario(usuario.getId());
+        hDAO.create(historico);
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
     private void jMIHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHistoricoActionPerformed
@@ -457,7 +462,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jTPAbasComponentRemoved
 
     private void jBUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUserActionPerformed
-        TelaLogin login = new TelaLogin();
         login.setVisible(true);
     }//GEN-LAST:event_jBUserActionPerformed
 
@@ -488,6 +492,54 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private void jMIConfigRedeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIConfigRedeActionPerformed
         rede.setVisible(true);
     }//GEN-LAST:event_jMIConfigRedeActionPerformed
+
+    private void jTFUrlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFUrlKeyPressed
+        if (evt.getKeyCode() == Event.ENTER) {
+            ArrayList<String> imagens = new ArrayList<String>();
+            String urlAcesso = jTFUrl.getText();
+            String texto = null;
+            String titulo = null;
+
+            try {
+                File file = new File("page.html");
+                texto = nav.urlDown(jTFUrl.getText(), file);
+
+                titulo = p.extrairTitulo(texto);
+                imagens = p.linkImage(texto, urlAcesso);
+                Nos arvore = p.parseArvore(texto, null);
+                rend.render(arvore, pagina, jTFUrl);
+                rend.renderTela(pagina, imagens);
+                if (!pilha.pilhaEsquerda.empty()) {
+                    jBVoltar.setEnabled(true);
+                } else {
+                    jBVoltar.setEnabled(false);
+                }
+                pilha.pilhaEsquerda.push(urlAcesso);
+                if (evt.getSource().equals(jBBuscarUrl)) {
+                    pilha.limparPilhaDireita();
+                    jBAvancar.setEnabled(false);
+                }
+            } catch (Exception e) {
+            }
+
+            historico.setPagina(titulo);
+            historico.setUrl(urlAcesso);
+            Timestamp data = new Timestamp(System.currentTimeMillis());
+            historico.setData_acesso(data);
+            historico.setId_usuario(usuario.getId());
+            hDAO.create(historico);
+        }
+    }//GEN-LAST:event_jTFUrlKeyPressed
+
+    private void jMIAddFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAddFavoritoActionPerformed
+        String nome = JOptionPane.showInputDialog("Você deseja adicionar o favorito com qual nome?");
+        favorito.setNome(nome);
+        favorito.setUrl(jTFUrl.getText());
+        Timestamp data = new Timestamp(System.currentTimeMillis());
+        favorito.setData_armazenamento(data);
+        favorito.setId_usuario(usuario.getId());
+        fDAO.create(favorito);
+    }//GEN-LAST:event_jMIAddFavoritoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -535,12 +587,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMIAddFavorito;
     private javax.swing.JMenuItem jMIConfigRede;
     private javax.swing.JMenuItem jMIExibirFavoritos;
-    private javax.swing.JMenuItem jMIFav1;
-    private javax.swing.JMenuItem jMIFav2;
-    private javax.swing.JMenuItem jMIFav3;
-    private javax.swing.JMenuItem jMIFav4;
-    private javax.swing.JMenuItem jMIFav5;
-    private javax.swing.JMenuItem jMIFavRecentes;
     private javax.swing.JMenuItem jMIHistorico;
     private javax.swing.JMenuItem jMIModoPrivado;
     private javax.swing.JPanel jPAba1;
@@ -551,9 +597,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private javax.swing.JScrollPane jSPPagina;
     private javax.swing.JPopupMenu.Separator jSeparador1;
     private javax.swing.JPopupMenu.Separator jSeparador2;
-    private javax.swing.JPopupMenu.Separator jSeparador3;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JTextField jTFUrl;
+    public javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
     public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
