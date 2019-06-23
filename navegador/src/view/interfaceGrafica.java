@@ -8,27 +8,10 @@ package view;
 import java.awt.Event;
 import java.awt.HeadlessException;
 import view.customized.ButtonTabComponent;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.net.URL;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JFileChooser;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import model.bean.Favorito;
 import model.bean.Historico;
@@ -357,40 +340,31 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
         jPopupMenu.show(jBMenu, WIDTH - 175, jBMenu.getY() - 7);
     }//GEN-LAST:event_jBMenuActionPerformed
-
-    private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-        //adicionar tratamento para pegar o Title
-        //h.setPagina(pagina);
-        //h.setUrl(jTFUrl.getText());
-        //h.setData_acesso();
-        //hDAO.create(h);
-
+    public void verificarRequest(String address, File file) throws Exception {
         ArrayList<String> imagens = new ArrayList<String>();
         String urlAcesso = jTFUrl.getText();
         String texto = null;
         String titulo = null;
-
+        String problema = null;
         try {
-            File file = new File("page.html");
-            texto = nav.urlDown(jTFUrl.getText(), file);
-
-            titulo = p.extrairTitulo(texto);
-            imagens = p.linkImage(texto, urlAcesso);
-            Nos arvore = p.parseArvore(texto, null);
-            rend.render(arvore, pagina, jTFUrl);
-            rend.renderTela(pagina, imagens);
-            if (!pilha.pilhaEsquerda.empty()) {
-                jBVoltar.setEnabled(true);
-            } else {
-                jBVoltar.setEnabled(false);
+            problema = nav.urlRequest(address, file);
+            System.out.println(problema);
+            if (!problema.equalsIgnoreCase(null)) {
+                JOptionPane.showMessageDialog(null, problema);
+                new Exception(problema);
+                return;
             }
-            pilha.pilhaEsquerda.push(urlAcesso);
-            if (evt.getSource().equals(jBBuscarUrl)) {
-                pilha.limparPilhaDireita();
-                jBAvancar.setEnabled(false);
-            }
-        } catch (Exception e) {
+        } catch (Exception ex) {
         }
+        System.out.println("simmmm");
+        texto = nav.urlDown(urlAcesso, file);
+        titulo = p.extrairTitulo(texto);
+        int aba = jTPAbas.getSelectedIndex();
+        jTPAbas.setTitleAt(aba, titulo);
+        imagens = p.linkImage(texto, urlAcesso);
+        Nos arvore = p.parseArvore(texto, null);
+        rend.render(arvore, pagina, jTFUrl);
+        rend.renderTela(pagina, imagens);
 
         historico.setPagina(titulo);
         historico.setUrl(urlAcesso);
@@ -398,11 +372,34 @@ public class interfaceGrafica extends javax.swing.JFrame {
         historico.setData_acesso(data);
         historico.setId_usuario(usuario.getId());
         hDAO.create(historico);
+
+    }
+    private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
+
+        try {
+            File file = new File("page.html");
+            verificarRequest(jTFUrl.getText(), file);
+
+            if (!pilha.pilhaEsquerda.empty()) {
+                jBVoltar.setEnabled(true);
+            } else {
+                jBVoltar.setEnabled(false);
+            }
+            pilha.pilhaEsquerda.push(jTFUrl.getText());
+            if (evt.getSource().equals(jBBuscarUrl)) {
+                pilha.limparPilhaDireita();
+                jBAvancar.setEnabled(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
     private void jMIHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHistoricoActionPerformed
-        MenuHistorico historico = new MenuHistorico();
-        historico.setVisible(true);
+        MenuHistorico historicoMenu = new MenuHistorico();
+        historicoMenu.setVisible(true);
     }//GEN-LAST:event_jMIHistoricoActionPerformed
 
     private void jMIExibirFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIExibirFavoritosActionPerformed
@@ -495,39 +492,23 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
     private void jTFUrlKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFUrlKeyPressed
         if (evt.getKeyCode() == Event.ENTER) {
-            ArrayList<String> imagens = new ArrayList<String>();
-            String urlAcesso = jTFUrl.getText();
-            String texto = null;
-            String titulo = null;
-
             try {
                 File file = new File("page.html");
-                texto = nav.urlDown(jTFUrl.getText(), file);
+                verificarRequest(jTFUrl.getText(), file);
 
-                titulo = p.extrairTitulo(texto);
-                imagens = p.linkImage(texto, urlAcesso);
-                Nos arvore = p.parseArvore(texto, null);
-                rend.render(arvore, pagina, jTFUrl);
-                rend.renderTela(pagina, imagens);
                 if (!pilha.pilhaEsquerda.empty()) {
                     jBVoltar.setEnabled(true);
                 } else {
                     jBVoltar.setEnabled(false);
                 }
-                pilha.pilhaEsquerda.push(urlAcesso);
+                pilha.pilhaEsquerda.push(jTFUrl.getText());
                 if (evt.getSource().equals(jBBuscarUrl)) {
                     pilha.limparPilhaDireita();
                     jBAvancar.setEnabled(false);
                 }
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
             }
-
-            historico.setPagina(titulo);
-            historico.setUrl(urlAcesso);
-            Timestamp data = new Timestamp(System.currentTimeMillis());
-            historico.setData_acesso(data);
-            historico.setId_usuario(usuario.getId());
-            hDAO.create(historico);
         }
     }//GEN-LAST:event_jTFUrlKeyPressed
 

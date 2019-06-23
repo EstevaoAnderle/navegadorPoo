@@ -48,6 +48,7 @@ public class Render {
         String botao = "";
         switch (parser.nameTag) {
             case "a":
+//                txt += "<br><a " + parser.atributosTag + ">" + parser.texto + "</b></font>";
                 Pattern p = Pattern.compile("href=[\\'\"]?([^\\'\" >]+)");
                 Matcher m = p.matcher(parser.getAtributosTag());
                 if (m.find()) {
