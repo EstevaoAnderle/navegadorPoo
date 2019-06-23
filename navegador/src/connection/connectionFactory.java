@@ -12,9 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- *
- * @author Estêvão Anderle, Lenon de Paula Classe contém configurações da
- * conexão
+ * Classe contém configurações da conexão
+ * 
+ * @author Estêvão Anderle, Lenon de Paula 
  */
 public class connectionFactory {
 
