@@ -5,14 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import model.bean.Usuario;
 
 /**
+ * Classe que realiza o login dos usuários.
  *
- *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class usuarioDAO {
 
@@ -20,22 +18,14 @@ public class usuarioDAO {
     private String nomeUsuario;
     Usuario usuario = new Usuario();
 
-    //Esse cara seria utilizado se caso a gente criasse um usuário
-//    public boolean save(Usuario usuario) {
-//        String sql = "INSERT INTO usuario (nome, login, senha) VALUES (?, ?, ?)";
-//        PreparedStatement stmt = null;
-//        try {
-//            stmt = con.prepareStatement(sql);
-//            stmt.setString(1, usuario.getNome());
-//            stmt.setString(2, usuario.getLogin());
-//            stmt.setString(3, usuario.getSenha());
-//            stmt.executeUpdate();
-//            return true;
-//        } catch (SQLException ex) {
-//            System.err.println("Erro " + ex);
-//            return false;
-//        }
-//    }
+    /**
+     * Verifica se o login e senha informado estão de acordo e se será possível
+     * realizar o login
+     *
+     * @param login do usuário
+     * @param senha do usuário
+     * @return se foi possível conectar com o usuário informado ou não
+     */
     public boolean checkLogin(String login, String senha) {
         String sql = "SELECT * FROM usuario WHERE login = ? AND senha = ?";
         PreparedStatement stmt = null;
@@ -50,13 +40,6 @@ public class usuarioDAO {
             stmt.setString(2, senha);
             rs = stmt.executeQuery();
 
-//            while (rs.next()) {
-//                Usuario usuario = new Usuario();
-//                usuario.setId(rs.getInt("id"));
-//                usuario.setNome(rs.getString("nome"));
-//                usuario.setLogin(rs.getString("login"));
-//                usuario.setSenha(rs.getString("senha"));
-//            }
             if (rs.next()) {
                 check = true;
                 nomeUsuario = rs.getString("nome");

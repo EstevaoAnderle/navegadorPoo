@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Color;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Historico;
 import model.dao.historicoDAO;
 
 /**
+ * Classe que exibe e trata os históricos.
  *
- * @author estev
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class MenuHistorico extends javax.swing.JFrame {
 
@@ -29,6 +23,9 @@ public class MenuHistorico extends javax.swing.JFrame {
         getAllHistorico();
     }
 
+    /**
+     * Busca todos os históricos e exibe na tabela.
+     */
     public void getAllHistorico() {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
         dtmHistorico.setNumRows(0);
@@ -44,6 +41,11 @@ public class MenuHistorico extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Busca todos os históricos, filtrando por nome.
+     *
+     * @param pagina nome do histórico pesquisado
+     */
     public void getAllHistoricoUrl(String pagina) {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
         dtmHistorico.setNumRows(0);
@@ -58,6 +60,11 @@ public class MenuHistorico extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Busca todos os históricos, filtrando por data.
+     *
+     * @param data do histórico pesquisado
+     */
     public void getAllHistoricoData(String data) {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTHistorico.getModel();
         dtmHistorico.setNumRows(0);

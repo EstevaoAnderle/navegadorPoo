@@ -1,16 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import javax.swing.JOptionPane;
 import model.dao.usuarioDAO;
 
 /**
+ * Tela responsável por realizar o login dos usuários no navegador.
  *
- * @author estev
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class TelaLogin extends javax.swing.JFrame {
 
@@ -35,7 +31,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jLLogin = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTFLogin = new javax.swing.JTextField();
-        jTFSenha = new javax.swing.JTextField();
+        jTFSenha = new javax.swing.JPasswordField();
         jBLogar = new javax.swing.JButton();
         jLInfo = new javax.swing.JLabel();
 
@@ -172,6 +168,6 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTFLogin;
-    private javax.swing.JTextField jTFSenha;
+    private javax.swing.JPasswordField jTFSenha;
     // End of variables declaration//GEN-END:variables
 }

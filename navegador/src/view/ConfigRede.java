@@ -5,11 +5,13 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import service.navegadorService;
 
 /**
+ * Classe responsável por realizar a configuração do proxy do navegador.
  *
- * @author estevao.050597
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class ConfigRede extends javax.swing.JFrame {
 
@@ -73,7 +75,19 @@ public class ConfigRede extends javax.swing.JFrame {
 
         jLIp.setText("IP:");
 
+        jTFIp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFIpKeyTyped(evt);
+            }
+        });
+
         jLPorta.setText("Porta:");
+
+        jTFPorta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFPortaKeyTyped(evt);
+            }
+        });
 
         jBSalvar.setText("Salvar");
         jBSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -151,13 +165,36 @@ public class ConfigRede extends javax.swing.JFrame {
     private void jBSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalvarActionPerformed
         if (jRBNao.isSelected()) {
             navegadorService.usaProxy = false;
+            dispose();
+        } else if (jRBSim.isSelected() && jTFIp.getText().equals("") && jTFPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe o IP e a porta para prosseguir.");
+            jTFIp.requestFocus();
+        } else if (jRBSim.isSelected() && !jTFIp.getText().equals("") && jTFPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe o número da porta.");
+            jTFPorta.requestFocus();
+        } else if (jRBSim.isSelected() && jTFIp.getText().equals("") && !jTFPorta.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe o IP.");
+            jTFIp.requestFocus();
         } else {
             navegadorService.ip = jTFIp.getText();
             navegadorService.porta = Integer.parseInt(jTFPorta.getText());
-            System.out.println(navegadorService.porta);
+            dispose();
         }
-        dispose();
     }//GEN-LAST:event_jBSalvarActionPerformed
+
+    private void jTFPortaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFPortaKeyTyped
+        String caracteres = "0123456789";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTFPortaKeyTyped
+
+    private void jTFIpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFIpKeyTyped
+        String caracteres = "0123456789.";
+        if (!caracteres.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTFIpKeyTyped
 
     /**
      * @param args the command line arguments

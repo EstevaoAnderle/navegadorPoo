@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view.customized;
 
 import javax.swing.*;
@@ -11,19 +6,20 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
+ * Classe que adiciona o botão para fechar nas abas.
  *
- * @author estevao
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class ButtonTabComponent extends JPanel {
 
     private final JTabbedPane pane;
 
-    //
-    //CONSTRUTOR
-    //
-    //Início...
+    /**
+     * Construtor do botão
+     *
+     * @param pane aba do navegador
+     */
     public ButtonTabComponent(final JTabbedPane pane) {
-        //unset default FlowLayout' gaps
         super(new FlowLayout(FlowLayout.LEFT, 0, 0));
         if (pane == null) {
             throw new NullPointerException("TabbedPane is null");
@@ -31,7 +27,7 @@ public class ButtonTabComponent extends JPanel {
         this.pane = pane;
         setOpaque(false);
 
-        //faz a JLabel ler o título do JTabbedPane
+        //Faz a JLabel ler o título do JTabbedPane
         JLabel label = new JLabel() {
             public String getText() {
                 int i = pane.indexOfTabComponent(ButtonTabComponent.this);
@@ -43,21 +39,18 @@ public class ButtonTabComponent extends JPanel {
         };
 
         add(label);
-        //adiciona mais espaço entre a label e o botão
+        //Adiciona mais espaço entre a label e o botão
         label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-        //tab button
+        //Tab button
         JButton button = new TabButton();
         add(button);
-        //adiciona mais espaço para o topo do componente
+        //Adiciona mais espaço para o topo do componente
         setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-    }//Fim do construtor.
+    }
 
-    //
-    //CLASSE TABBUTTON
-    //
-    //Define as características do botão fechar.
-    //
-    //Início
+    /**
+     * Define as características do botão "Fechar".
+     */
     private class TabButton extends JButton implements ActionListener {
 
         public TabButton() {
@@ -68,12 +61,12 @@ public class ButtonTabComponent extends JPanel {
             setUI(new BasicButtonUI());
             //Torna-o transparente
             setContentAreaFilled(false);
-            //Não necessidade de estar com focusable
+            //Não necessita de estar com focusable
             setFocusable(false);
             setBorder(BorderFactory.createEtchedBorder());
             setBorderPainted(false);
             //Fazendo um efeito de rolagem
-            //usamos o mesmo listener para todos os botões
+            //Usamos o mesmo listener para todos os botões
             addMouseListener(buttonMouseListener);
             setRolloverEnabled(true);
             //Fecha a guia apropriada, clicando no botão
@@ -87,11 +80,15 @@ public class ButtonTabComponent extends JPanel {
             }
         }
 
-        //pinta o X
+        /**
+         * Utilizada para pintar o botão
+         *
+         * @param g
+         */
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             Graphics2D g2 = (Graphics2D) g.create();
-            //mudança na imagem para botões pressionados
+            //Mudança na imagem para botões pressionados
             if (getModel().isPressed()) {
                 g2.translate(1, 1);
             }
@@ -105,14 +102,11 @@ public class ButtonTabComponent extends JPanel {
             g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
             g2.dispose();
         }
-    }//Fim da classe TabButton.
+    }
 
-    //
-    //MOUSELISTENER
-    //
-    //Define os eventos de entrada e saida do mouse.
-    //
-    //Início...
+    /**
+     * Define os eventos de entrada e de saída do mouse.
+     */
     private final static MouseListener buttonMouseListener = new MouseAdapter() {
         public void mouseEntered(MouseEvent e) {
             Component component = e.getComponent();
@@ -129,5 +123,5 @@ public class ButtonTabComponent extends JPanel {
                 button.setBorderPainted(false);
             }
         }
-    };//Fim dos Listeners.
+    };
 }

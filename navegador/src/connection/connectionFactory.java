@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package connection;
 
 import java.sql.PreparedStatement;
@@ -13,8 +8,8 @@ import java.sql.SQLException;
 
 /**
  * Classe contém configurações da conexão
- * 
- * @author Estêvão Anderle, Lenon de Paula 
+ *
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class connectionFactory {
 
@@ -80,12 +75,4 @@ public class connectionFactory {
             }
         }
     }
-
-    //https://www.youtube.com/watch?v=i5INLVcrMAg
-    //https://dev.mysql.com/downloads/file/?id=485766
-    //https://stackoverflow.com/questions/50387952/how-to-resolve-unable-to-load-authentication-plugin-caching-sha2-password-issu/50433762#50433762
-    //https://stackoverflow.com/questions/46131295/classcastexception-java-math-biginteger-cannot-be-cast-to-java-lang-long-on-con
-    //https://www.youtube.com/watch?v=IWcV-9Lcu64
-    //https://www.devmedia.com.br/forum/salvar-data-e-hora-no-bd/569558
-    //https://blog.alura.com.br/pegando-a-data-atual-em-java/
 }

@@ -121,6 +121,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFIp">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFIpKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLPorta">
       <Properties>
@@ -128,6 +131,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTFPorta">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFPortaKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jBSalvar">
       <Properties>

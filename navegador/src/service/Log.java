@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.io.File;
@@ -12,14 +7,18 @@ import java.io.PrintWriter;
 import java.util.Date;
 
 /**
+ * Criação do arquivo de log com as exceções que ocorrem.
  *
- * @author estev
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class Log {
 
     private PrintWriter out;
     private File file = new File("Log.txt");
 
+    /**
+     * Apenas cria a execução do log quando chamado.
+     */
     public Log() {
         try {
             if (!file.exists()) {
@@ -37,6 +36,11 @@ public class Log {
         }
     }
 
+    /**
+     * Grava o erro encaminhado no método.
+     *
+     * @param erro atirado no tratamento da exceção
+     */
     public void gravaErro(Throwable erro) {
         try {
             if (!file.exists()) {
@@ -46,7 +50,7 @@ public class Log {
                 out = new PrintWriter(new FileWriter(file, true));
             }
 
-            //Imprime o log
+            //Imprime o log no arquivo
             out.print("Data do erro: ");
             out.println(new Date());
             out.print("Mensagem de erro: ");

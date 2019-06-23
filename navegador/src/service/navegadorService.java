@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.io.BufferedReader;
@@ -31,11 +26,25 @@ public class navegadorService {
     public static String ip;
     public static int porta;
 
+    /**
+     * Construtor da classe e que é chamado na inicialização do navegador, já
+     * definindo o usuário padrão.
+     */
     public navegadorService() {
         Usuario usuario = new Usuario();
         usuario.setId(1);
     }
 
+    /**
+     * Método responsável por realizar a conexão e baixar o HTML da página
+     * acessada caso não seja encontrada nenhuma exceção. Se alguma exceção for
+     * encontrada, o arquivo de log será alimentado/criado.
+     *
+     * @param address url do site
+     * @param file que será baixado
+     * @return se foi possível acessar a página ou não
+     * @throws Exception encontrada
+     */
     public String urlRequest(String address, File file) throws Exception {
 
         BufferedReader in = null;
@@ -122,6 +131,14 @@ public class navegadorService {
         return problema;
     }
 
+    /**
+     * Realiza o download do HTML.
+     *
+     * @param address url da página
+     * @param file arquivo que será baixado
+     * @return o texto do HTML
+     * @throws IOException se caso for encontrada alguma falha na entrada
+     */
     public String urlDown(String address, File file) throws IOException {
         URL url = new URL(address);
         BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));

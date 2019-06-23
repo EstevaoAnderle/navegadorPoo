@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.dao;
 
 import connection.connectionFactory;
@@ -16,13 +11,21 @@ import model.bean.Historico;
 import model.bean.Usuario;
 
 /**
+ * Classe de acesso dos históricos ao banco de dados, com todos SQL necessários
+ * para uso.
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class historicoDAO {
 
     Usuario usuario = new Usuario();
 
+    /**
+     * Adiciona novos favoritos no banco.
+     *
+     * @param his que será adicionado
+     * @return se foi criado o histórico ou não
+     */
     public boolean create(Historico his) {
 
         Connection con = connectionFactory.getConnection();
@@ -45,6 +48,11 @@ public class historicoDAO {
         }
     }
 
+    /**
+     * Busca todos os históricos do usuário logado.
+     *
+     * @return os históricos do usuário logado
+     */
     public List<Historico> getAll() {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -72,6 +80,12 @@ public class historicoDAO {
         return his;
     }
 
+    /**
+     * Busca os históricos por nome.
+     *
+     * @param pagina do histórico procurado
+     * @return lista dos históricos
+     */
     public List<Historico> getForUrl(String pagina) {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -101,6 +115,12 @@ public class historicoDAO {
         return his;
     }
 
+    /**
+     * Busca os históricos por data.
+     *
+     * @param data do histórico procurado
+     * @return lista dos histórico
+     */
     public List<Historico> getForDate(String data) {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
