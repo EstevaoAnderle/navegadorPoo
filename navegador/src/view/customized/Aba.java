@@ -1,16 +1,31 @@
 package view.customized;
 
+import java.awt.Event;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import model.bean.Favorito;
+import model.bean.Historico;
+import model.bean.Usuario;
+import model.dao.favoritoDAO;
+import model.dao.historicoDAO;
 import service.Nos;
 import service.ParseHtml;
+import service.Pilha;
 import service.Render;
+import service.navegadorService;
+import view.ConfigRede;
+import view.MenuFavoritos;
+import view.MenuHistorico;
+import view.TelaLogin;
 
 /**
  * Classe onde as novas abas são criadas. Nela, ocorre a estilização da mesma
@@ -29,20 +44,30 @@ public class Aba extends JPanel {
     protected JScrollPane jSPPagina;
     protected JEditorPane pagina;
 
-    Render rend = new Render();
-
     /**
      * Inicia a nova aba e seus componentes.
      */
     public Aba() {
         super();
         init();
+
     }
 
     /**
      * Define o layout dos componentes, juntamente com ações e atributos.
      */
     private void init() {
+        navegadorService nav = new navegadorService();
+        ConfigRede rede = new ConfigRede();
+        Pilha pilha = new Pilha();
+        Render rend = new Render();
+        ParseHtml p = new ParseHtml();
+        TelaLogin login = new TelaLogin();
+        Historico historico = new Historico();
+        historicoDAO hDAO = new historicoDAO();
+        Favorito favorito = new Favorito();
+        favoritoDAO fDAO = new favoritoDAO();
+        Usuario usuario = new Usuario();
         //Variáveis
         jPNavegacao = new JPanel();
         jBVoltar = new JButton();
@@ -52,6 +77,13 @@ public class Aba extends JPanel {
         jBBuscarUrl = new JButton();
         pagina = new JEditorPane();
         jSPPagina = new JScrollPane(pagina);
+
+        if (pilha.pilhaEsquerda.empty()) {
+            jBVoltar.setEnabled(false);
+        }
+        if (pilha.pilhaDireita.empty()) {
+            jBAvancar.setEnabled(false);
+        }
 
         //Propriedades
         javax.swing.GroupLayout jPAba1Layout = new javax.swing.GroupLayout(this);
@@ -76,19 +108,152 @@ public class Aba extends JPanel {
 
         jBVoltar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/voltar.png"))); // NOI18N
         jBVoltar.setToolTipText("Voltar uma página");
+        jBVoltar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String ultimaUrl = pilha.pilhaEsquerda.empty() ? "" : pilha.voltar();
+                jTFUrl.setText(ultimaUrl);
+                jBBuscarUrl.addActionListener(this);
+                if (pilha.pilhaEsquerda.empty()) {
+                    jBVoltar.setEnabled(false);
+                }
+                jBAvancar.setEnabled(true);
+            }
+
+        });
 
         jBAvancar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/avancar.png"))); // NOI18N
         jBAvancar.setToolTipText("Avançar uma página");
+        jBAvancar.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String proximaUrl = pilha.pilhaDireita.empty() ? "" : pilha.avancar();
+                jTFUrl.setText(proximaUrl);
+                jBBuscarUrl.addActionListener(this);
+                if (pilha.pilhaDireita.empty()) {
+                    jBAvancar.setEnabled(false);
+                }
+                if (pilha.pilhaEsquerda.empty()) {
+                    jBVoltar.setEnabled(false);
+                }
+            }
+
+        });
 
         jPUrl.setBackground(new java.awt.Color(255, 255, 255));
+        jTFUrl.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == Event.ENTER) {
+                    try {
+                        File file = new File("page.html");
+                        verificarRequest(jTFUrl.getText(), file);
+
+                        if (!pilha.pilhaEsquerda.empty()) {
+                            jBVoltar.setEnabled(true);
+                        } else {
+                            jBVoltar.setEnabled(false);
+                        }
+                        pilha.pilhaEsquerda.push(jTFUrl.getText());
+                        if (evt.getSource().equals(jBBuscarUrl)) {
+                            pilha.limparPilhaDireita();
+                            jBAvancar.setEnabled(false);
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+                }
+            }
+
+            public void verificarRequest(String address, File file) throws Exception {
+                ArrayList<String> imagens = new ArrayList<String>();
+                String urlAcesso = jTFUrl.getText();
+                String texto = null;
+                String titulo = null;
+                String problema = null;
+                try {
+                    problema = nav.urlRequest(address, file);
+                    if (!problema.equalsIgnoreCase(null)) {
+                        JOptionPane.showMessageDialog(null, problema);
+                        new Exception(problema);
+                        return;
+                    }
+                } catch (Exception ex) {
+                }
+                texto = nav.urlDown(urlAcesso, file);
+                titulo = p.extrairTitulo(texto);
+//                int aba = jTPAbas.getSelectedIndex();
+//                jTPAbas.setTitleAt(aba, titulo);
+                imagens = p.linkImage(texto, urlAcesso);
+                Nos arvore = p.parseArvore(texto, null);
+                rend.render(arvore, pagina, jTFUrl);
+                rend.renderTela(pagina, imagens);
+
+                historico.setPagina(titulo);
+                historico.setUrl(urlAcesso);
+                Timestamp data = new Timestamp(System.currentTimeMillis());
+                historico.setData_acesso(data);
+                historico.setId_usuario(usuario.getId());
+                hDAO.create(historico);
+            }
+        });
 
         jBBuscarUrl.setBackground(new java.awt.Color(255, 255, 255));
         jBBuscarUrl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/busca_url.png"))); // NOI18N
         jBBuscarUrl.setToolTipText("Ir para endereço digitado");
         jBBuscarUrl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                //jBBuscarUrlActionPerformed(evt);
+                try {
+                    File file = new File("page.html");
+                    verificarRequest(jTFUrl.getText(), file);
+
+                    if (!pilha.pilhaEsquerda.empty()) {
+                        jBVoltar.setEnabled(true);
+                    } else {
+                        jBVoltar.setEnabled(false);
+                    }
+                    pilha.pilhaEsquerda.push(jTFUrl.getText());
+                    if (evt.getSource().equals(jBBuscarUrl)) {
+                        pilha.limparPilhaDireita();
+                        jBAvancar.setEnabled(false);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
             }
+            //Adicionar todas ações abaixo disso
+
+            public void verificarRequest(String address, File file) throws Exception {
+                ArrayList<String> imagens = new ArrayList<String>();
+                String urlAcesso = jTFUrl.getText();
+                String texto = null;
+                String titulo = null;
+                String problema = null;
+                try {
+                    problema = nav.urlRequest(address, file);
+                    if (!problema.equalsIgnoreCase(null)) {
+                        JOptionPane.showMessageDialog(null, problema);
+                        new Exception(problema);
+                        return;
+                    }
+                } catch (Exception ex) {
+                }
+                texto = nav.urlDown(urlAcesso, file);
+                titulo = p.extrairTitulo(texto);
+//                int aba = jTPAbas.getSelectedIndex();
+//                jTPAbas.setTitleAt(aba, titulo);
+                imagens = p.linkImage(texto, urlAcesso);
+                Nos arvore = p.parseArvore(texto, null);
+                rend.render(arvore, pagina, jTFUrl);
+                rend.renderTela(pagina, imagens);
+
+                historico.setPagina(titulo);
+                historico.setUrl(urlAcesso);
+                Timestamp data = new Timestamp(System.currentTimeMillis());
+                historico.setData_acesso(data);
+                historico.setId_usuario(usuario.getId());
+                hDAO.create(historico);
+            }
+
         });
 
         javax.swing.GroupLayout jPUrlLayout = new javax.swing.GroupLayout(jPUrl);
@@ -142,54 +307,4 @@ public class Aba extends JPanel {
         jSPPagina.setViewportView(pagina);
     }
 
-    /**
-     * Armazena o histórico para o usuário logado, fazendo o download do HTML e
-     * realizando o parse juntamente com o render.
-     *
-     * @param evt - ação do clique do mouse.
-     */
-    private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {
-        //Historico h = new Historico();
-        //historicoDAO hDAO = new historicoDAO();
-        //adicionar tratamento para pegar o Title
-        //h.setPagina(pagina);
-        //h.setUrl(jTFUrl.getText());
-        //h.setData_acesso();
-        //hDAO.create(h);
-
-        ArrayList<String> imagens = new ArrayList<String>();
-        String titulo = jTFUrl.getText();
-        try {
-            //testes com arquivo local, html mais simples
-            String texto = null;
-//            JFileChooser chooser = new JFileChooser();
-//            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//
-//            }
-//            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-//            String linha = "";
-//            while (br.ready()) {
-//                while (br.ready()) {
-//                    linha += br.readLine();
-//                }
-//            }
-//            br.close();
-//            br.close();
-
-            URL url = new URL(jTFUrl.getText());
-            File file = new File("page.html");
-
-            //texto = nav.urlDown(url, file);
-            //Imagem
-            //Parser Texto
-            ParseHtml p = new ParseHtml();
-            imagens = p.linkImage(texto, titulo);
-            Nos arvore = p.parseArvore(texto, null);
-//            rend.render(arvore, pagina);
-            rend.renderTela(pagina, imagens);
-        } catch (Exception e) {
-        }
-    }
-
-    //Adicionar todas ações abaixo disso
 }

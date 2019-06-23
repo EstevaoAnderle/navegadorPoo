@@ -47,7 +47,7 @@ public class Render {
                 Pattern p = Pattern.compile("href=[\\'\"]?([^\\'\" >]+)");
                 Matcher m = p.matcher(parser.getAtributosTag());
                 if (m.find()) {
-                    bt.BotaoEvento(pagina, parser.atributosTag, j, m.group(1));
+                    bt.BotaoEvento(pagina, parser.texto, j, m.group(1));
                 }
                 break;
             case "h1":
