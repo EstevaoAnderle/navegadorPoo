@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Event;
@@ -26,8 +21,9 @@ import service.navegadorService;
 import view.customized.Aba;
 
 /**
+ * Interface principal do navegador.
  *
- * @author Lenon
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class interfaceGrafica extends javax.swing.JFrame {
 
@@ -340,6 +336,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
         jPopupMenu.show(jBMenu, WIDTH - 175, jBMenu.getY() - 7);
     }//GEN-LAST:event_jBMenuActionPerformed
+
     public void verificarRequest(String address, File file) throws Exception {
         ArrayList<String> imagens = new ArrayList<String>();
         String urlAcesso = jTFUrl.getText();
@@ -348,7 +345,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         String problema = null;
         try {
             problema = nav.urlRequest(address, file);
-            System.out.println(problema);
             if (!problema.equalsIgnoreCase(null)) {
                 JOptionPane.showMessageDialog(null, problema);
                 new Exception(problema);
@@ -356,7 +352,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
         }
-        System.out.println("simmmm");
         texto = nav.urlDown(urlAcesso, file);
         titulo = p.extrairTitulo(texto);
         int aba = jTPAbas.getSelectedIndex();
@@ -375,7 +370,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
 
     }
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
-
         try {
             File file = new File("page.html");
             verificarRequest(jTFUrl.getText(), file);
@@ -393,8 +387,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-
-
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
 
     private void jMIHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHistoricoActionPerformed
@@ -408,7 +400,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jMIExibirFavoritosActionPerformed
 
     private void jBNovaAbaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaAbaActionPerformed
-
         int numero = jTPAbas.getTabCount();
         if (this.getExtendedState() == 0) {
             Aba panel = new Aba();
@@ -463,7 +454,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBUserActionPerformed
 
     private void jBVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBVoltarActionPerformed
-
         String ultimaUrl = pilha.pilhaEsquerda.empty() ? "" : pilha.voltar();
         jTFUrl.setText(ultimaUrl);
         jBBuscarUrlActionPerformed(evt);
@@ -474,7 +464,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBVoltarActionPerformed
 
     private void jBAvancarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBAvancarActionPerformed
-
         String proximaUrl = pilha.pilhaDireita.empty() ? "" : pilha.avancar();
         jTFUrl.setText(proximaUrl);
         jBBuscarUrlActionPerformed(evt);
@@ -513,13 +502,19 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFUrlKeyPressed
 
     private void jMIAddFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAddFavoritoActionPerformed
-        String nome = JOptionPane.showInputDialog("Você deseja adicionar o favorito com qual nome?");
-        favorito.setNome(nome);
-        favorito.setUrl(jTFUrl.getText());
-        Timestamp data = new Timestamp(System.currentTimeMillis());
-        favorito.setData_armazenamento(data);
-        favorito.setId_usuario(usuario.getId());
-        fDAO.create(favorito);
+        if (jTFUrl.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Informe uma URL para prosseguir.");
+        } else {
+            String nome = JOptionPane.showInputDialog("Você deseja adicionar o favorito com qual nome?");
+            if (nome != null) {
+                favorito.setNome(nome);
+                favorito.setUrl(jTFUrl.getText());
+                Timestamp data = new Timestamp(System.currentTimeMillis());
+                favorito.setData_armazenamento(data);
+                favorito.setId_usuario(usuario.getId());
+                fDAO.create(favorito);
+            }
+        }
     }//GEN-LAST:event_jMIAddFavoritoActionPerformed
 
     /**
@@ -584,20 +579,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
     public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables
 
-    //testes com arquivo local, html mais simples
-//            JFileChooser chooser = new JFileChooser();
-//            if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-//
-//            }
-//            BufferedReader br = new BufferedReader(new FileReader(chooser.getSelectedFile()));
-//            String linha = "";
-//            while (br.ready()) {
-//                while (br.ready()) {
-//                    linha += br.readLine();
-//                }
-//            }
-//            br.close();
-//            br.close();
+
     /*  Alguns sites que renderizam rápido
                 http://po.ta.to/
                 http://www.ismycomputeron.com/

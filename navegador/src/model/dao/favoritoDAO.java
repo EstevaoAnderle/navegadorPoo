@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model.dao;
 
 import connection.connectionFactory;
@@ -18,13 +13,21 @@ import model.bean.Favorito;
 import model.bean.Usuario;
 
 /**
+ * Classe de acesso dos favoritos ao banco de dados, com todos SQL necessários
+ * para uso.
  *
- * @author estev
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class favoritoDAO {
 
     Usuario usuario = new Usuario();
 
+    /**
+     * Adiciona novos favoritos no banco.
+     *
+     * @param fav que será adicionado
+     * @return se foi criado o favorito ou não
+     */
     public boolean create(Favorito fav) {
 
         Connection con = connectionFactory.getConnection();
@@ -50,6 +53,11 @@ public class favoritoDAO {
         }
     }
 
+    /**
+     * Busca todos os favoritos do usuário logado.
+     *
+     * @return os favoritos do usuário logado
+     */
     public List<Favorito> getAll() {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -78,6 +86,12 @@ public class favoritoDAO {
         return fav;
     }
 
+    /**
+     * Busca os favoritos por nome.
+     *
+     * @param nome do favorito procurado
+     * @return lista dos favoritos
+     */
     public List<Favorito> getForNome(String nome) {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;
@@ -107,6 +121,12 @@ public class favoritoDAO {
         return his;
     }
 
+    /**
+     * Busca os favoritos por data.
+     *
+     * @param data do favorito procurado
+     * @return lista dos favoritos
+     */
     public List<Favorito> getForDate(String data) {
         Connection con = connectionFactory.getConnection();
         PreparedStatement stmt = null;

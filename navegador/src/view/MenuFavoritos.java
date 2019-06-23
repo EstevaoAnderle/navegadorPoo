@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package view;
 
 import java.awt.Color;
@@ -11,14 +6,12 @@ import model.bean.Favorito;
 import model.dao.favoritoDAO;
 
 /**
+ * Classe que exibe e trata os favoritos.
  *
- * @author estev
+ * @author Estêvão Anderle, Lenon de Paula
  */
 public class MenuFavoritos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form JFrameMenuHistorico
-     */
     public MenuFavoritos() {
         initComponents();
         //Isso faz com que ele sempre inicie centralizado
@@ -27,6 +20,9 @@ public class MenuFavoritos extends javax.swing.JFrame {
         getAllFavorito();
     }
 
+    /**
+     * Busca todos os favoritos e exibe na tabela.
+     */
     public void getAllFavorito() {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
         dtmHistorico.setNumRows(0);
@@ -42,6 +38,11 @@ public class MenuFavoritos extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Busca todos os favoritos, filtrando por nome.
+     *
+     * @param nome do favorito pesquisado
+     */
     public void getAllFavoritoNome(String nome) {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
         dtmHistorico.setNumRows(0);
@@ -56,6 +57,11 @@ public class MenuFavoritos extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Busca todos os favoritos, filtrando por data.
+     *
+     * @param data do favorito pesquisado
+     */
     public void getAllFavoritoData(String data) {
         DefaultTableModel dtmHistorico = (DefaultTableModel) jTFavorito.getModel();
         dtmHistorico.setNumRows(0);

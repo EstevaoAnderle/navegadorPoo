@@ -1,14 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package service;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import view.interfaceGrafica;
 
 /**
  * Classe Parser, é reponsavel em verificar a estrutura hmtl passada e na
@@ -59,9 +53,11 @@ public class ParseHtml {
             return false;
         }
     }
+
     /**
      * Metodo extrai o TITLE do html passado
-     * @param parse strig com o html 
+     *
+     * @param parse strig com o html
      * @return Retorna o TITLE do html
      */
     public String extrairTitulo(String parse) {
@@ -73,8 +69,10 @@ public class ParseHtml {
         }
         return titulo;
     }
+
     /**
      * Método extrai todas a imagens presente no hmtl
+     *
      * @param parse strig com o html
      * @param url url de acesso para se preciso, definir caminho do servidor
      * @return Retorna um array contendo as imagens do html
@@ -94,8 +92,10 @@ public class ParseHtml {
         }
         return imagens;
     }
+
     /**
      * Método responsavél para verificar má formação no html
+     *
      * @param html strig com o html
      * @return Retorna true caso mal formatado, false ao contrario disso.
      */
