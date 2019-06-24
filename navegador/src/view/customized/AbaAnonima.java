@@ -3,7 +3,6 @@ package view.customized;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -28,12 +27,13 @@ import view.MenuHistorico;
 import view.TelaLogin;
 
 /**
- * Classe onde as novas abas são criadas. Nela, ocorre a estilização da mesma
- * seguindo o padrão da primeira aba, juntamente com as demais ações.
+ * Classe onde as novas abas são criadas para as janelas anônimas. Nela, ocorre
+ * a estilização da mesma seguindo o padrão da primeira aba, juntamente com as
+ * demais ações.
  *
  * @author Estêvão Anderle, Lenon de Paula
  */
-public class Aba extends JPanel {
+public class AbaAnonima extends JPanel {
 
     protected JPanel jPNavegacao;
     protected JButton jBVoltar;
@@ -47,7 +47,7 @@ public class Aba extends JPanel {
     /**
      * Inicia a nova aba e seus componentes.
      */
-    public Aba() {
+    public AbaAnonima() {
         super();
         init();
 
@@ -63,11 +63,6 @@ public class Aba extends JPanel {
         Render rend = new Render();
         ParseHtml p = new ParseHtml();
         TelaLogin login = new TelaLogin();
-        Historico historico = new Historico();
-        historicoDAO hDAO = new historicoDAO();
-        Favorito favorito = new Favorito();
-        favoritoDAO fDAO = new favoritoDAO();
-        Usuario usuario = new Usuario();
 
         //Variáveis
         jPNavegacao = new JPanel();
@@ -189,12 +184,6 @@ public class Aba extends JPanel {
                 rend.render(arvore, pagina, jTFUrl);
                 rend.renderTela(pagina, imagens);
 
-                historico.setPagina(titulo);
-                historico.setUrl(urlAcesso);
-                Timestamp data = new Timestamp(System.currentTimeMillis());
-                historico.setData_acesso(data);
-                historico.setId_usuario(usuario.getId());
-                hDAO.create(historico);
             }
         });
 
@@ -246,13 +235,6 @@ public class Aba extends JPanel {
                 Nos arvore = p.parseArvore(texto, null);
                 rend.render(arvore, pagina, jTFUrl);
                 rend.renderTela(pagina, imagens);
-
-                historico.setPagina(titulo);
-                historico.setUrl(urlAcesso);
-                Timestamp data = new Timestamp(System.currentTimeMillis());
-                historico.setData_acesso(data);
-                historico.setId_usuario(usuario.getId());
-                hDAO.create(historico);
             }
 
         });

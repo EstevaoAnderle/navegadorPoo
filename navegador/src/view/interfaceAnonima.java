@@ -1,51 +1,37 @@
 package view;
 
-import java.awt.AWTException;
 import java.awt.Event;
 import java.awt.HeadlessException;
-import java.awt.Robot;
 import view.customized.ButtonTabComponent;
 import java.io.File;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
-import model.bean.Favorito;
-import model.bean.Historico;
-import model.bean.Usuario;
-import model.dao.favoritoDAO;
-import model.dao.historicoDAO;
 import service.Nos;
 import service.ParseHtml;
 import service.Pilha;
 import service.Render;
 import service.navegadorService;
 import view.customized.Aba;
+import view.customized.AbaAnonima;
 
 /**
- * Interface principal do navegador.
+ * Interface anônima do navegador.
  *
  * @author Estêvão Anderle, Lenon de Paula
  */
-public class interfaceGrafica extends javax.swing.JFrame {
+public class interfaceAnonima extends javax.swing.JFrame {
 
     navegadorService nav = new navegadorService();
     ConfigRede rede = new ConfigRede();
     Pilha pilha = new Pilha();
     Render rend = new Render();
     ParseHtml p = new ParseHtml();
-    TelaLogin login = new TelaLogin();
-    Historico historico = new Historico();
-    historicoDAO hDAO = new historicoDAO();
-    Favorito favorito = new Favorito();
-    favoritoDAO fDAO = new favoritoDAO();
-    Usuario usuario = new Usuario();
-    interfaceAnonima anoni = new interfaceAnonima();
 
     /**
      * Creates new form interfaceGrafica
      */
-    public interfaceGrafica() {
+    public interfaceAnonima() {
         initComponents();
         if (pilha.pilhaEsquerda.empty()) {
             jBVoltar.setEnabled(false);
@@ -57,7 +43,7 @@ public class interfaceGrafica extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    public interfaceGrafica(String url) throws HeadlessException {
+    public interfaceAnonima(String url) throws HeadlessException {
 
     }
 
@@ -71,19 +57,12 @@ public class interfaceGrafica extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu = new javax.swing.JPopupMenu();
-        jMIHistorico = new javax.swing.JMenuItem();
-        jMFavoritos = new javax.swing.JMenu();
-        jMIAddFavorito = new javax.swing.JMenuItem();
-        jSeparador2 = new javax.swing.JPopupMenu.Separator();
-        jMIExibirFavoritos = new javax.swing.JMenuItem();
-        jSeparador1 = new javax.swing.JPopupMenu.Separator();
-        jMIModoPrivado = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMIConfigRede = new javax.swing.JMenuItem();
         jPAcoes = new javax.swing.JPanel();
         jBUser = new javax.swing.JButton();
         jBMenu = new javax.swing.JButton();
         jBNovaAba = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jTPAbas = new javax.swing.JTabbedPane();
         jPAba1 = new javax.swing.JPanel();
         jPNavegacao = new javax.swing.JPanel();
@@ -95,55 +74,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         jSPPagina = new javax.swing.JScrollPane();
         pagina = new javax.swing.JEditorPane();
 
-        jMIHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.event.InputEvent.CTRL_MASK));
-        jMIHistorico.setText("Histórico");
-        jMIHistorico.setToolTipText("Acessar histórico");
-        jMIHistorico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIHistoricoActionPerformed(evt);
-            }
-        });
-        jPopupMenu.add(jMIHistorico);
-
-        jMFavoritos.setText("Favoritos");
-        jMFavoritos.setToolTipText("Ver favoritos");
-        jMFavoritos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jMIAddFavorito.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        jMIAddFavorito.setText("Adicionar página aos favoritos");
-        jMIAddFavorito.setToolTipText("Salvar página como favorito");
-        jMIAddFavorito.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIAddFavoritoActionPerformed(evt);
-            }
-        });
-        jMFavoritos.add(jMIAddFavorito);
-        jMFavoritos.add(jSeparador2);
-
-        jMIExibirFavoritos.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMIExibirFavoritos.setText("Mostrar favoritos");
-        jMIExibirFavoritos.setToolTipText("Acessar favoritos");
-        jMIExibirFavoritos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIExibirFavoritosActionPerformed(evt);
-            }
-        });
-        jMFavoritos.add(jMIExibirFavoritos);
-
-        jPopupMenu.add(jMFavoritos);
-        jPopupMenu.add(jSeparador1);
-
-        jMIModoPrivado.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMIModoPrivado.setText("Modo privativo");
-        jMIModoPrivado.setToolTipText("Navegar de forma privada");
-        jMIModoPrivado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMIModoPrivadoActionPerformed(evt);
-            }
-        });
-        jPopupMenu.add(jMIModoPrivado);
-        jPopupMenu.add(jSeparator1);
-
         jMIConfigRede.setText("Configurar rede...");
         jMIConfigRede.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,18 +82,15 @@ public class interfaceGrafica extends javax.swing.JFrame {
         });
         jPopupMenu.add(jMIConfigRede);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Navegador");
 
+        jPAcoes.setBackground(new java.awt.Color(153, 153, 153));
         jPAcoes.setPreferredSize(new java.awt.Dimension(82, 78));
 
         jBUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/user.png"))); // NOI18N
         jBUser.setToolTipText("Logar no navegador");
-        jBUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBUserActionPerformed(evt);
-            }
-        });
+        jBUser.setEnabled(false);
 
         jBMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/menu.png"))); // NOI18N
         jBMenu.setToolTipText("Abrir menu");
@@ -182,23 +109,32 @@ public class interfaceGrafica extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/icons/anonimo.png"))); // NOI18N
+        jLabel1.setText("Navegando em modo anônimo");
+
         javax.swing.GroupLayout jPAcoesLayout = new javax.swing.GroupLayout(jPAcoes);
         jPAcoes.setLayout(jPAcoesLayout);
         jPAcoesLayout.setHorizontalGroup(
             jPAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPAcoesLayout.createSequentialGroup()
-                .addGap(558, 558, 558)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 348, Short.MAX_VALUE)
                 .addComponent(jBNovaAba, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPAcoesLayout.setVerticalGroup(
             jPAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jBMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPAcoesLayout.createSequentialGroup()
+                .addGroup(jPAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPAcoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jBUser, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1))
             .addComponent(jBNovaAba, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -339,10 +275,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public static void adicionaUrlExterna(String address) {
-        jTFUrl.setText(address);
-    }
-
     public void verificarRequest(String address, File file) throws Exception {
         ArrayList<String> imagens = new ArrayList<String>();
         String urlAcesso = jTFUrl.getText();
@@ -366,14 +298,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
         Nos arvore = p.parseArvore(texto, null);
         rend.render(arvore, pagina, jTFUrl);
         rend.renderTela(pagina, imagens);
-
-        historico.setPagina(titulo);
-        historico.setUrl(urlAcesso);
-        Timestamp data = new Timestamp(System.currentTimeMillis());
-        historico.setData_acesso(data);
-        historico.setId_usuario(usuario.getId());
-        hDAO.create(historico);
-
     }
     private void jBBuscarUrlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarUrlActionPerformed
         try {
@@ -394,16 +318,6 @@ public class interfaceGrafica extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_jBBuscarUrlActionPerformed
-
-    private void jMIHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIHistoricoActionPerformed
-        MenuHistorico historicoMenu = new MenuHistorico();
-        historicoMenu.setVisible(true);
-    }//GEN-LAST:event_jMIHistoricoActionPerformed
-
-    private void jMIExibirFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIExibirFavoritosActionPerformed
-        MenuFavoritos favoritos = new MenuFavoritos();
-        favoritos.setVisible(true);
-    }//GEN-LAST:event_jMIExibirFavoritosActionPerformed
 
     private void jTPAbasComponentRemoved(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jTPAbasComponentRemoved
         if (jTPAbas.getTabCount() <= 0) {
@@ -464,26 +378,10 @@ public class interfaceGrafica extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTFUrlKeyPressed
 
-    private void jMIAddFavoritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIAddFavoritoActionPerformed
-        if (jTFUrl.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Informe uma URL para prosseguir.");
-        } else {
-            String nome = JOptionPane.showInputDialog("Você deseja adicionar o favorito com qual nome?");
-            if (nome != null) {
-                favorito.setNome(nome);
-                favorito.setUrl(jTFUrl.getText());
-                Timestamp data = new Timestamp(System.currentTimeMillis());
-                favorito.setData_armazenamento(data);
-                favorito.setId_usuario(usuario.getId());
-                fDAO.create(favorito);
-            }
-        }
-    }//GEN-LAST:event_jMIAddFavoritoActionPerformed
-
     private void jBNovaAbaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNovaAbaActionPerformed
         int numero = jTPAbas.getTabCount();
         if (this.getExtendedState() == 0) {
-            Aba panel = new Aba();
+            AbaAnonima panel = new AbaAnonima();
 
             if (numero <= 8) {
                 String titulo = "Aba " + numero;
@@ -519,16 +417,8 @@ public class interfaceGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_jBNovaAbaActionPerformed
 
     private void jBMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMenuActionPerformed
-        jPopupMenu.show(jBMenu, WIDTH - 187, jBMenu.getY() + 35);
+        jPopupMenu.show(jBMenu, WIDTH - 105, jBMenu.getY() + 35);
     }//GEN-LAST:event_jBMenuActionPerformed
-
-    private void jBUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBUserActionPerformed
-        login.setVisible(true);
-    }//GEN-LAST:event_jBUserActionPerformed
-
-    private void jMIModoPrivadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIModoPrivadoActionPerformed
-        anoni.setVisible(true);
-    }//GEN-LAST:event_jMIModoPrivadoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,47 +437,41 @@ public class interfaceGrafica extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(interfaceGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(interfaceAnonima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(interfaceGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(interfaceAnonima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(interfaceGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(interfaceAnonima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(interfaceGrafica.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(interfaceAnonima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new interfaceGrafica().setVisible(true);
+                new interfaceAnonima().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBAvancar;
-    private javax.swing.JButton jBBuscarUrl;
+    protected javax.swing.JButton jBBuscarUrl;
     private javax.swing.JButton jBMenu;
     private javax.swing.JButton jBNovaAba;
     private javax.swing.JButton jBUser;
     private javax.swing.JButton jBVoltar;
-    private javax.swing.JMenu jMFavoritos;
-    private javax.swing.JMenuItem jMIAddFavorito;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuItem jMIConfigRede;
-    private javax.swing.JMenuItem jMIExibirFavoritos;
-    private javax.swing.JMenuItem jMIHistorico;
-    private javax.swing.JMenuItem jMIModoPrivado;
     private javax.swing.JPanel jPAba1;
     private javax.swing.JPanel jPAcoes;
     private javax.swing.JPanel jPNavegacao;
     public javax.swing.JPanel jPUrl;
     private javax.swing.JPopupMenu jPopupMenu;
     private javax.swing.JScrollPane jSPPagina;
-    private javax.swing.JPopupMenu.Separator jSeparador1;
-    private javax.swing.JPopupMenu.Separator jSeparador2;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    public static javax.swing.JTextField jTFUrl;
+    public javax.swing.JTextField jTFUrl;
     private javax.swing.JTabbedPane jTPAbas;
     public javax.swing.JEditorPane pagina;
     // End of variables declaration//GEN-END:variables

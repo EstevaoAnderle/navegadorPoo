@@ -1,6 +1,11 @@
 package view;
 
+import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Event;
+import java.awt.Robot;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Favorito;
 import model.dao.favoritoDAO;
@@ -131,10 +136,14 @@ public class MenuFavoritos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTFavorito.setColumnSelectionAllowed(true);
         jTFavorito.setRowSelectionAllowed(false);
+        jTFavorito.getTableHeader().setReorderingAllowed(false);
+        jTFavorito.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTFavoritoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTFavorito);
-        jTFavorito.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         jBCancelar.setText("Fechar");
         jBCancelar.setToolTipText("Fechar favoritos");
@@ -207,6 +216,14 @@ public class MenuFavoritos extends javax.swing.JFrame {
             getAllFavoritoData(jTFPesquisarFavorito.getText());
         }
     }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jTFavoritoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFavoritoMouseClicked
+        if (evt.getClickCount() == 2) {
+            String url = (String) jTFavorito.getValueAt(jTFavorito.getSelectedRow(), 2);
+            interfaceGrafica.adicionaUrlExterna(url);
+            dispose();
+        }
+    }//GEN-LAST:event_jTFavoritoMouseClicked
 
     /**
      * @param args the command line arguments

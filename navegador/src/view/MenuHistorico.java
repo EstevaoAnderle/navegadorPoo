@@ -1,6 +1,9 @@
 package view;
 
+import java.awt.AWTException;
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Historico;
 import model.dao.historicoDAO;
@@ -134,10 +137,14 @@ public class MenuHistorico extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTHistorico.setColumnSelectionAllowed(true);
         jTHistorico.setRowSelectionAllowed(false);
+        jTHistorico.getTableHeader().setReorderingAllowed(false);
+        jTHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTHistoricoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTHistorico);
-        jTHistorico.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         jBCancelar.setText("Fechar");
         jBCancelar.setToolTipText("Fechar histórico");
@@ -212,6 +219,14 @@ public class MenuHistorico extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jBBuscarActionPerformed
+
+    private void jTHistoricoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTHistoricoMouseClicked
+        if (evt.getClickCount() == 2) {
+            String url = (String) jTHistorico.getValueAt(jTHistorico.getSelectedRow(), 2);
+            interfaceGrafica.adicionaUrlExterna(url);
+            dispose();
+        }
+    }//GEN-LAST:event_jTHistoricoMouseClicked
 
     /**
      * @param args the command line arguments
