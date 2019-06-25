@@ -24,16 +24,26 @@ public class ParseHtml {
     public Nos parseArvore(String parse, Nos raiz) {
         if (raiz == null) {
             raiz = new Nos("", "", "");
-        }
-        Pattern p = Pattern.compile("(?s)<(.*)(\\s?\\w*\\s.*?)?>(.*?)<(\\/\\1)>");
-        Matcher m = p.matcher(parse);
-        while (m.find()) {
-            Nos n = new Nos(m.group(1), m.group(2), " ");
-            if (detectaTexto(m.group(3))) {
-                n.texto = m.group(3);
-            }
+            Pattern p = Pattern.compile("(?s)<(.*)(\\s?\\w*\\s.*?)?>(.*?)<(\\/\\1)>");
+            Matcher m = p.matcher(parse);
+            while (m.find()) {
+                Nos n = new Nos(m.group(1), m.group(2), " ");
+                if (detectaTexto(m.group(3))) {
+                    n.texto = m.group(3);
+                }
 
-            raiz.noChildren.add(parseArvore(m.group(3), n));
+                raiz.noChildren.add(parseArvore(m.group(3), n));
+            }
+        } else {
+            Pattern p = Pattern.compile("(?s)<(.*)(\\s?\\w*\\s.*?)?>(.*?)<(\\/\\1)>");
+            Matcher m = p.matcher(parse);
+            while (m.find()) {
+                Nos n = new Nos(m.group(1), m.group(2), " ");
+                if (detectaTexto(m.group(3))) {
+                    n.texto = m.group(3);
+                }
+                raiz.noChildren.add(parseArvore(m.group(3), n));
+            }
         }
         return raiz;
     }

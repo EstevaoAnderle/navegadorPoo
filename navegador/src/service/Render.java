@@ -70,11 +70,13 @@ public class Render {
      */
     public void renderTela(JEditorPane pagina, ArrayList imagem) {
         for (int i = 0; i < imagem.size(); i++) {
-            txt += "<img src=" + imagem.get(i).toString() + ">";
+            txt += "<br><img src=" + imagem.get(i).toString() + ">";
+            imagem.remove(i);
+
+            pagina.setContentType("text/html");
+            pagina.setText(txt);
+            txt = "";
         }
-        pagina.setContentType("text/html");
-        pagina.setText(txt);
-        txt = "";
     }
 
 }
